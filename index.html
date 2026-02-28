@@ -67,10 +67,9 @@
             100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
         }
         
-        @keyframes pulseRed {
-            0% { box-shadow: 0 20px 40px -10px rgba(160, 0, 0, 0.8), 0 0 20px rgba(160, 0, 0, 0.4) inset; }
-            50% { box-shadow: 0 20px 50px -5px rgba(220, 0, 0, 0.9), 0 0 40px rgba(220, 0, 0, 0.6) inset; }
-            100% { box-shadow: 0 20px 40px -10px rgba(160, 0, 0, 0.8), 0 0 20px rgba(160, 0, 0, 0.4) inset; }
+        @keyframes continuousSpin {
+            0% { transform: perspective(1000px) rotateY(0deg); }
+            100% { transform: perspective(1000px) rotateY(360deg); }
         }
 
         /* --- HEADER --- */
@@ -116,384 +115,433 @@
 
         /* --- LAYOUT --- */
         .container { 
-    max-width: 95%; /* Change from 1400px to a percentage */
-    margin: 0 auto; 
-    padding: 80px 20px 50px 20px; 
-    perspective: 1000px; 
-    position: relative; 
-    z-index: 4; 
-}
+            max-width: 95%; 
+            margin: 0 auto; 
+            padding: 80px 20px 50px 20px; 
+            perspective: 1200px; 
+            position: relative; 
+            z-index: 4; 
+        }
         .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-bottom: 80px; }
         .card-wrapper, .team-section-wrapper { opacity: 0; transform: translateY(100px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .show { opacity: 1; transform: translateY(0); }
 
-        /* --- CARDS --- */
+        /* --- CARDS & DETAILING --- */
         .card {
-            position: relative; height: 450px; width: 100%; background-color: #1a1a1a; border-radius: 10px;
-            cursor: pointer; transform-style: preserve-3d; transform: perspective(1000px); transition: transform 0.1s ease-out;
-            box-shadow: 0 10px 30px -10 rgba(0,0,0,0.8); overflow: hidden; 
+            position: relative; height: 450px; width: 100%; background-color: #0d0d0d; border-radius: 12px;
+            cursor: pointer; transform-style: preserve-3d; 
+            animation: continuousSpin 12s linear infinite;
+            transition: box-shadow 0.3s ease, border-color 0.3s;
+            /* Slight red glow to the default rotating state */
+            box-shadow: 0 0 20px rgba(200, 0, 0, 0.25), 0 10px 30px -10px rgba(0,0,0,0.9); overflow: hidden; 
+            border: 1px solid rgba(150, 0, 0, 0.25); 
         }
-        .card:hover { z-index: 10; animation: pulseRed 2s infinite; }
+        
+        .card:hover { 
+            z-index: 10; 
+            border-color: #ff0000;
+            /* Expanded, brighter red glow on hover */
+            box-shadow: 0 0 45px rgba(220, 0, 0, 0.6), 0 0 40px rgba(180, 0, 0, 0.4) inset;
+        }
+
+        /* Stagger animations so cards rotate at different angles */
+        .card-wrapper:nth-child(2) .card { animation-delay: -2s; }
+        .card-wrapper:nth-child(3) .card { animation-delay: -5s; }
+        .card-wrapper:nth-child(4) .card { animation-delay: -8s; }
+        .card-wrapper:nth-child(5) .card { animation-delay: -10s; }
+
+        /* Corner Brackets Overlay */
+        .card-border-details {
+            position: absolute; inset: 15px; border: 1px solid rgba(255, 0, 0, 0.05);
+            pointer-events: none; z-index: 6; transition: all 0.4s ease;
+        }
+        .card-border-details::before, .card-border-details::after {
+            content: ''; position: absolute; width: 20px; height: 20px;
+            border-color: #660000; border-style: solid; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            opacity: 0.5;
+        }
+        .card-border-details::before { top: -2px; left: -2px; border-width: 2px 0 0 2px; }
+        .card-border-details::after { bottom: -2px; right: -2px; border-width: 0 2px 2px 0; }
+        
+        .card:hover .card-border-details { border-color: rgba(255, 0, 0, 0.2); inset: 10px; }
+        .card:hover .card-border-details::before { 
+            top: -5px; left: -5px; width: 40px; height: 40px; 
+            border-color: #ff0000; opacity: 1; box-shadow: -2px -2px 10px rgba(255,0,0,0.4); 
+        }
+        .card:hover .card-border-details::after { 
+            bottom: -5px; right: -5px; width: 40px; height: 40px; 
+            border-color: #ff0000; opacity: 1; box-shadow: 2px 2px 10px rgba(255,0,0,0.4); 
+        }
+
         .card-sheen {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0.4) 50%, rgba(255, 255, 255, 0.1) 60%, transparent);
+            background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.1) 40%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.1) 60%, transparent);
             transform: skewX(-25deg) translateX(-200%); transition: transform 0.5s; pointer-events: none; z-index: 5;
         }
         .card:hover .card-sheen { transform: skewX(-25deg) translateX(200%); transition: transform 0.7s ease-in-out; }
+        
         .card-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    border-radius: 10px;
-    background-size: cover;
-    background-position: center;
-    filter: grayscale(100%) brightness(0.6);
-    transition: filter 0.5s ease;
-}
-.tile-1 .card-bg { 
-    background-image: url('photos/director.webp'); 
-}
-.tile-2 .card-bg { 
-    background-image: url('photos/Kishorjit.webp'); 
-}
-.tile-3 .card-bg { 
-    background-image: url('photos/Malemnganbi.webp'); 
-}
-.tile-4 .card-bg { 
-    background-image: url('photos/guest_image.webp'); 
-}
-.tile-5 .card-bg { 
-    background-image: url('photos/1099.webp'); /* Replace with your image path */
-}
-        .card:hover .card-bg { filter: grayscale(0%) brightness(1.1) contrast(1.1); }
-        .card-content {
-            position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px; border-radius: 0 0 10px 10px;
-            background: linear-gradient(to top, rgba(0,0,0,0.95), transparent); transform: translateZ(50px) translateY(20px); 
-            opacity: 0; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); pointer-events: none;
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            border-radius: 10px; background-size: cover; background-position: center;
+            filter: grayscale(100%) brightness(0.5) contrast(1.2); transition: filter 0.6s ease;
+            box-shadow: inset 0 0 60px rgba(0,0,0,0.9); /* Deep inner shadow */
         }
-        .card:hover .card-content { transform: translateZ(60px) translateY(0); opacity: 1; }
-        .card-title { font-size: 1.8rem; font-weight: 800; color: #fff; margin-bottom: 8px; text-transform: uppercase; text-shadow: 0 2px 4px rgba(0,0,0,1); transform: translateZ(20px);}
-        .card-desc { font-size: 1rem; color: #ccc; text-shadow: 0 1px 2px rgba(0,0,0,1); line-height: 1.4;transform: translateZ(50px); display: block; }
+        .tile-1 .card-bg { background-image: url('photos/director.webp'); }
+        .tile-2 .card-bg { background-image: url('photos/Kishorjit.webp'); }
+        .tile-3 .card-bg { background-image: url('photos/Malemnganbi.webp'); }
+        .tile-4 .card-bg { background-image: url('photos/guest_image.webp'); }
+        .tile-5 .card-bg { background-image: url('photos/1099.webp'); }
+        
+        .card:hover .card-bg { filter: grayscale(10%) brightness(0.9) contrast(1.1); box-shadow: inset 0 0 30px rgba(0,0,0,0.7); }
+        
+        .card-content {
+            position: absolute; bottom: 0; left: 0; width: 100%; padding: 35px 30px; border-radius: 0 0 10px 10px;
+            background: linear-gradient(to top, rgba(5,0,0,0.95) 15%, rgba(5,0,0,0.7) 60%, transparent); 
+            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+            transform: translateZ(50px) translateY(20px); 
+            opacity: 0; transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1); pointer-events: none;
+            border-bottom: 2px solid transparent;
+        }
+        .card:hover .card-content { 
+            transform: translateZ(60px) translateY(0); opacity: 1; 
+            border-bottom: 2px solid #880000;
+        }
+        
+        .card-title { 
+            font-size: 1.6rem; font-weight: 800; color: #fff; margin-bottom: 12px; 
+            text-transform: uppercase; text-shadow: 0 2px 6px rgba(0,0,0,1); 
+            transform: translateZ(20px); letter-spacing: 2px;
+            position: relative;
+        }
+        
+        .card-title::after {
+            content: ''; display: block; width: 0; height: 3px; 
+            background: #ff0000; margin-top: 6px; 
+            transition: width 0.5s cubic-bezier(0.23, 1, 0.32, 1); 
+            box-shadow: 0 0 8px #ff0000;
+        }
+        .card:hover .card-title::after { width: 45px; }
+
+        .card-desc { 
+            font-size: 0.95rem; color: #ccc; text-shadow: 0 1px 3px rgba(0,0,0,1); 
+            line-height: 1.5; transform: translateZ(50px); display: block; 
+            border-left: 1px solid rgba(255,0,0,0.3); padding-left: 10px;
+        }
 
         /* --- TEAM TAGS --- */
-        .team-section { text-align: center; border-top: 1px solid #333; padding-top: 50px; }
-        .team-title { font-size: 1.2rem; text-transform: uppercase; letter-spacing: 4px; color: #666; margin-bottom: 30px; }
-        .tags-container { display: flex;
-    flex-direction: column; /* This forces one tag per line */
-    align-items: center;    /* This centers them horizontally */
-    gap: 20px;              /* Space between each tag */
-    max-width: 600px;
-    margin: 0 auto;
-    padding: 40px 20px; }
+       .team-section { 
+            text-align: center; 
+            border-top: 1px solid #333; 
+            padding-top: 50px; 
+            position: relative; /* Anchors the absolute positioned image */
+            min-height: 550px; /* Ensures the section is tall enough for the image */
+        }
+       .guts-leaning-img {
+            position: absolute;
+            bottom: -150px;
+            left: 5%; /* Anchors him to the left side */
+            height: 680px;; /* Made slightly larger to fill the vertical void */
+            z-index: 0;
+            pointer-events: none;
+            transform: rotate(4deg); 
+            filter: drop-shadow(10px 10px 20px rgba(0, 0, 0, 0.9)) brightness(0.8);
+            transition: all 0.5s ease;
+        }
+
+        /* Responsive adjustments so he doesn't cover everything on smaller screens */
         
-        .tag {
-            padding: 15px 45px; border: 1px solid #444; border-radius: 50px; color: #aaa; text-transform: uppercase;
-            font-size: 1.1rem; letter-spacing: 2px; cursor: pointer; transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            background: transparent; font-family: inherit; position: relative; outline: none;
+       .team-title { 
+            font-size: 1.2rem; 
+            text-transform: uppercase; 
+            letter-spacing: 4px; 
+            color: #666; 
+            margin-bottom: 30px; 
+        }
+        .tags-container { 
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Creates a 2-column layout to fill space */
+            gap: 20px;              
+            max-width: 850px; /* Widened to fit the grid */
+            margin: 0 5% 0 auto; /* Pushes the entire grid to the right side of the screen */
+            padding: 20px;
+            position: relative;
+            z-index: 1; /* Keeps buttons above the image */
+        }
+        
+       .tag {
+            padding: 15px 25px; 
+            border: 1px solid #444; 
+            border-radius: 50px; 
+            color: #aaa; 
+            text-transform: uppercase;
+            font-size: 0.95rem; /* Slightly smaller to fit longer team names */
+            letter-spacing: 2px; 
+            cursor: pointer; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            background: rgba(5, 5, 5, 0.7); /* Dark semi-transparent background */
+            backdrop-filter: blur(4px); /* Blurs the image if it overlaps */
+            font-family: inherit; 
+            position: relative; 
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            min-height: 75px; /* Keeps grid rows equal height */
         }
         .tag:hover { 
-            border-color: #ff0000; color: #fb0202; 
+            border-color: #ff0000; 
+            color: #fb0202; 
             box-shadow: 0 0 10px rgba(255, 0, 0, 0.6), inset 0 0 8px rgb(255, 0, 0); 
-            transform: translateY(-5px) scale(1.05); 
+            transform: translateY(-5px) scale(1.02); 
+            background: rgba(20, 0, 0, 0.8);
+        }
+        @media screen and (max-width: 1000px) {
+            .tags-container {
+                grid-template-columns: 1fr; /* Reverts to single column on tablets */
+                margin: 0 auto; /* Centers it again */
+                max-width: 600px;
+            }
+            .guts-leaning-img {
+                left: -15%;
+                height: 500px;
+                opacity: 0.25; /* Fades out so centered tags are readable */
+                z-index: 0;
+            }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .guts-leaning-img {
+                left: -30%;
+                height: 400px;
+                opacity: 0.15;
+            }
+            .tag {
+                font-size: 0.85rem;
+                padding: 15px;
+            }
         }
 
         /* --- OVERLAY --- */
         .overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.95);
-    z-index: 1000;
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.4s;
-    backdrop-filter: blur(10px);
-    
-    /* Changed to allow vertical scrolling */
-    display: block; 
-    overflow-y: auto; 
-    padding: 80px 20px; /* Space for the close button and bottom padding */
-}
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: 0.4s;
+            backdrop-filter: blur(10px);
+            display: block; 
+            overflow-y: auto; 
+            padding: 80px 20px;
+        }
         .overlay.active { opacity: 1; pointer-events: auto; }
         .close-btn {
-    position: fixed; /* Changed from absolute to fixed */
-    top: 30px;
-    right: 40px;
-    background: none;
-    border: none;
-    color: #666;
-    font-size: 3rem;
-    cursor: pointer;
-    z-index: 1001; /* Above the overlay content */
-    transition: color 0.3s;
-}
-.close-btn:hover {
-    color: #ff0000;
-}
-        .overlay-content {
-    width: 100%;
-    max-width: 1000px;
-    margin: 0 auto; /* Centers the list horizontally */
-    position: relative;
-}
-        /* --- UPDATED TABULAR MEMBER TAGS --- */
-.members-grid { 
-    display: grid; 
-    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
-    gap: 15px; 
-    margin-top: 30px;
-}
-
-.member-row {
-    background: #121212; /* Dark tile color from screenshot */
-    border-radius: 8px;
-    padding: 18px 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border: 1px solid #1a1a1a;
-    transition: all 0.2s ease;
-    text-align: left;
-}
-
-.member-row:hover {
-    background: #1a1a1a;
-    border-color: #333;
-}
-
-.member-info {
-    display: flex;
-    flex-direction: column;
-}
-
-.member-name {
-    font-size: 1.1rem;
-    font-weight: 600;
-    color: #fff;
-    margin-bottom: 2px;
-}
-
-.member-role {
-    font-size: 0.85rem;
-    color: #777;
-    letter-spacing: 1px;
-}
-
-.member-action {
-    font-size: 0.9rem;
-    color: #555; /* Muted "Read" style text */
-    font-weight: 500;
-}
-/* Update this section in your <style> tag */
-.member-row:hover {
-    background: #1a1a1a;
-    border-color: #ff0000; /* Red border on hover */
-    box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); /* Soft red glow */
-    transform: translateX(10px); /* Slight slide effect */
-}
-
-.member-row:hover .member-name {
-    color: #ff0000; /* Name turns red on hover */
-    text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
-}
-/* --- VERTICAL PARALLEL TABS FOR WEBSITE TEAM --- */
-.website-tabs-container {
-    display: flex;
-    width: 100%;
-    height: 60vh; /* Takes up most of the overlay height */
-    gap: 10px;
-    margin-top: 20px;
-}
-
-.vertical-tab {
-    flex: 1; /* All tabs start with equal width */
-    position: relative;
-    overflow: hidden;
-    border-radius: 15px;
-    border: 1px solid #333;
-    transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    cursor: pointer;
-    background-size: cover;
-    background-position: center;
-}
-
-/* Expansion Effect: The hovered tab grows while others shrink */
-.vertical-tab:hover {
-    flex: 12; 
-    border-color: #ff0000;
-    box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
-    
-}
-
-/* Character Backgrounds */
-.tab-0 { background-image: url('photos/guts.webp'); }
-.tab-1 { background-image: url('photos/griffith.webp'); }
-.tab-2 { background-image: url('photos/casca.webp'); }
-.tab-3 { background-image: url('photos/skull.webp'); }
-.tab-4 { background-image: url('photos/zodd.webp'); }
-
-.tab-overlay {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(0,0,0,0.9) 10%,
-        transparent 100%
-    );
-    z-index: 1;
-    pointer-events: none;
-}
-
-.tab-content-vertical {
-    position: absolute;
-    bottom: 30px;
-    left: 20px;
-    right: 20px; /* Added right spacing to define boundaries */
-    z-index: 2;
-    color: white;
-    pointer-events: none;
-    
-}
-
-.tab-name-vert {
-    font-size: 1.5rem;
-    font-weight: 900;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    display: block;
-    
-    /* 1. Handle long names */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    
-    /* 2. Glow effect for readability against busy backgrounds */
-    text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 1);
-    transition: all 0.4s ease;
-}
-
-.tab-role-vert {
-    font-size: 0.9rem;
-    color: #ff0000;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: 0.4s ease;
-}
-
-.vertical-tab:hover .tab-name-vert {
-    white-space: normal; /* Allows text to wrap or expand */
-    overflow: visible;
-    letter-spacing: 3px;
-    font-size: 1.7rem; /* Slight size increase to emphasize the reveal */
-}
-.member-row:hover .member-action {
-    color: #ff0000; /* Action text turns red */
-}
-/* --- UPDATED LEADER BANNER WITH PHOTO --- */
-.leader-banner {
-    grid-column: 1 / -1; 
-    background: linear-gradient(90deg, rgba(255,0,0,0.15), transparent);
-    border-left: 5px solid #ff0000; 
-    padding: 20px; 
-    margin-bottom: 20px; 
-    text-align: left;
-    display: flex; /* Added for photo alignment */
-    align-items: center;
-    gap: 20px;
-}
-
-.leader-photo {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    border: 2px solid #ff0000;
-    object-fit: cover;
-    background-color: #1a1a1a; /* Placeholder color */
-    flex-shrink: 0;
-}
-
-.leader-text-content {
-    flex-grow: 1;
-}
-
-.leader-banner h3{ 
-    color: #ff0000; 
-    text-transform: uppercase; 
-    letter-spacing: 5px; 
-    font-size: 1.4rem; 
-    margin-bottom: 5px; 
-}
-
-.leader-contact { 
-    font-size: 0.9rem; 
-    color: #aaa; 
-    font-style: italic; 
-    word-break: break-all;
-}
-/* .coleader-banner {
-            grid-column: 1 / -1; background: linear-gradient(90deg, rgba(255,0,0,0.15), transparent);
-            border-left: 5px solid #ff0000; padding: 20px; margin-bottom: 20px; text-align: left;
+            position: fixed;
+            top: 30px;
+            right: 40px;
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 3rem;
+            cursor: pointer;
+            z-index: 1001; 
+            transition: color 0.3s;
         }
-        .coleader-banner h4 { color: #ff0000; text-transform: uppercase; letter-spacing: 5px; font-size: 1.4rem; margin-bottom: 5px; }
-        .coleader-contact { font-size: 0.9rem; color: #aaa; font-style: italic; } */
-/* Adjust overlay title spacing */
-#overlayTitle { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 10px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 10px; text-align: center; }
+        .close-btn:hover { color: #ff0000; }
+        .overlay-content { width: 100%; max-width: 1000px; margin: 0 auto; position: relative; }
         
+        /* --- UPDATED TABULAR MEMBER TAGS --- */
+        .members-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); 
+            gap: 15px; 
+            margin-top: 30px;
+        }
+
+        .member-row {
+            background: #121212; 
+            border-radius: 8px;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #1a1a1a;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .member-info { display: flex; flex-direction: column; }
+        .member-name { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 2px; }
+        .member-role { font-size: 0.85rem; color: #777; letter-spacing: 1px; }
+        .member-action { font-size: 0.9rem; color: #555; font-weight: 500; }
+
+        .member-row:hover {
+            background: #1a1a1a;
+            border-color: #ff0000; 
+            box-shadow: 0 0 15px rgba(255, 0, 0, 0.2); 
+            transform: translateX(10px); 
+        }
+
+        .member-row:hover .member-name {
+            color: #ff0000; 
+            text-shadow: 0 0 5px rgba(255, 0, 0, 0.5);
+        }
+        .member-row:hover .member-action { color: #ff0000; }
+
+        /* --- VERTICAL PARALLEL TABS FOR WEBSITE TEAM --- */
+        .website-tabs-container { display: flex; width: 100%; height: 60vh; gap: 10px; margin-top: 20px; }
+        
+        .vertical-tab {
+            flex: 1; 
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            border: 1px solid #333;
+            transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+            cursor: pointer;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .vertical-tab:hover {
+            flex: 12; 
+            border-color: #ff0000;
+            box-shadow: 0 0 30px rgba(255, 0, 0, 0.4);
+        }
+
+        .tab-0 { background-image: url('photos/guts.webp'); }
+        .tab-1 { background-image: url('photos/griffith.webp'); }
+        .tab-2 { background-image: url('photos/casca.webp'); }
+        .tab-3 { background-image: url('photos/skull.webp'); }
+        .tab-4 { background-image: url('photos/zodd.webp'); }
+
+        .tab-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9) 10%, transparent 100%);
+            z-index: 1; pointer-events: none;
+        }
+
+        .tab-content-vertical {
+            position: absolute; bottom: 30px; left: 20px; right: 20px; 
+            z-index: 2; color: white; pointer-events: none;
+        }
+
+        .tab-name-vert {
+            font-size: 1.5rem; font-weight: 900; text-transform: uppercase; letter-spacing: 2px; display: block;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.8), 0 0 5px rgba(0, 0, 0, 1); transition: all 0.4s ease;
+        }
+
+        .tab-role-vert {
+            font-size: 0.9rem; color: #ff0000; text-transform: uppercase; letter-spacing: 2px;
+            opacity: 0; transform: translateY(10px); transition: 0.4s ease;
+        }
+
+        .vertical-tab:hover .tab-name-vert {
+            white-space: normal; 
+            overflow: visible;
+            letter-spacing: 3px;
+            font-size: 1.7rem; 
+        }
+
+        /* --- UPDATED LEADER BANNER WITH PHOTO --- */
+        .leader-banner {
+            grid-column: 1 / -1; 
+            background: linear-gradient(90deg, rgba(255,0,0,0.15), transparent);
+            border-left: 5px solid #ff0000; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            text-align: left;
+            display: flex; 
+            align-items: center;
+            gap: 20px;
+        }
+
+        .leader-photo {
+            width: 80px; height: 80px; border-radius: 50%; border: 2px solid #ff0000;
+            object-fit: cover; background-color: #1a1a1a; flex-shrink: 0;
+        }
+
+        .leader-text-content { flex-grow: 1; }
+
+        .leader-banner h3{ 
+            color: #ff0000; text-transform: uppercase; letter-spacing: 5px; 
+            font-size: 1.4rem; margin-bottom: 5px; 
+        }
+
+        .leader-contact { 
+            font-size: 0.9rem; color: #aaa; font-style: italic; word-break: break-all;
+        }
+        
+        #overlayTitle { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 10px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 10px; text-align: center; }
         footer { text-align: center; padding: 60px; color: #555; font-size: 0.8rem; opacity: 0; transition: opacity 1s ease; }
         footer.show { opacity: 1; }
 
+        /* --- MOBILE VIEW --- */
+        /* --- MOBILE VIEW --- */
+       /* --- MOBILE VIEW --- */
+        @media screen and (max-width: 1000px) {
+            .tags-container { grid-template-columns: 1fr; margin: 0 auto; max-width: 600px; }
+            .guts-leaning-img { left: -15%; height: 500px; opacity: 0.25; z-index: 0; }
+        }
+        
+        @media screen and (max-width: 768px) {
+            .card { 
+                animation: none !important; 
+                transform: perspective(1000px) rotateY(0deg) !important; 
+            }
+            
+            /* --- NEW: Auto-show details when scrolling into view on mobile --- */
+            .card.in-view {
+                border-color: #ff0000;
+                box-shadow: 0 0 45px rgba(220, 0, 0, 0.6), 0 0 40px rgba(180, 0, 0, 0.4) inset;
+            }
+            .card.in-view .card-content {
+                transform: translateZ(60px) translateY(0); 
+                opacity: 1; 
+                border-bottom: 2px solid #880000;
+            }
+            .card.in-view .card-bg {
+                filter: grayscale(10%) brightness(0.9) contrast(1.1); 
+                box-shadow: inset 0 0 30px rgba(0,0,0,0.7);
+            }
+            .card.in-view .card-title::after { width: 45px; }
+            /* ------------------------------------------------------------------ */
 
-/* --- MOBILE VIEW: AUTO-SHOW CARD CONTENT --- */
-/* This block ONLY runs on screens 768px wide or smaller */
-@media screen and (max-width: 768px) {
-    /* Force the text content to be visible without hover */
-    .grid .card-wrapper .card .card-content {
-        opacity: 1 !important;
-        transform: translateZ(60px) translateY(0) !important;
-        background: linear-gradient(to top, rgba(0,0,0,0.9) 40%, transparent) !important;
-        pointer-events: auto;
-    }
+            .card-title { font-size: 1.5rem !important; letter-spacing: 5px !important; }
+            .card-desc { font-size: 1rem !important; }
+            h1 { font-size: 3rem !important; letter-spacing: 8px !important; }
+            p.subtitle { font-size: 1rem !important; letter-spacing: 3px !important; }
+            .hero-overlay { padding: 0 20px; width: 100%; }
+            .brand-image { width: 80px !important; }
+            .brand-container { top: 15px; left: 15px; }
+            .guts-leaning-img { left: -30%; height: 400px; opacity: 0.15; }
+            .tag { font-size: 0.85rem; padding: 15px; }
+        }
+        /* The new falling animation */
+@keyframes rainBlood {
+    0% { transform: translateY(0) scaleY(1); opacity: 0; }
+    5% { opacity: 0.9; }
+    100% { transform: translateY(100vh) scaleY(1.5); opacity: 0; }
+}
 
-    /* Force the background image to be colored/bright without hover */
-    .grid .card-wrapper .card .card-bg {
-        filter: grayscale(0%) brightness(1) contrast(1.1) !important;
-    }
+/* Container for the blood drops */
+.blood-container {
+    position: absolute; 
+    top: 0; left: 0; width: 100%; height: 100%; 
+    pointer-events: none; z-index: 3; overflow: hidden;
+}
 
-    /* Adjust font sizes for mobile readability */
-    .card-title {
-        font-size: 1.5rem !important;
-        letter-spacing: 5px !important;
-    }
-
-    .card-desc {
-        font-size: 1rem !important;
-    }
-    h1 {
-        font-size: 3rem !important; /* Reduced from 6rem */
-        letter-spacing: 8px !important;
-    }
-
-    /* Scale the subtitle */
-    p.subtitle {
-        font-size: 1rem !important;
-        letter-spacing: 3px !important;
-    }
-
-    /* Ensure the hero text overlay is centered properly */
-    .hero-overlay {
-        padding: 0 20px;
-        width: 100%;
-    }
-    .brand-image {
-        width: 80px !important; /* Smaller brand on mobile */
-    }
-    .brand-container {
-        top: 15px;
-        left: 15px;
-    
+/* Styling the individual blood drops */
+.blood-drop {
+    position: absolute; 
+    top: -20px; /* Start slightly above the screen */
+    background: linear-gradient(to bottom, rgba(255,0,0,0.1), #aa0000); /* Dark red gradient */
+    border-radius: 50%; 
+    pointer-events: none;
+    filter: drop-shadow(5px 5px 3px rgba(200,0,0,0.8)); /* Subtle red glow */
 }
     </style>
 </head>
@@ -506,7 +554,7 @@
     </div>
 
     <header>
-        <div class="ash-container" id="ashContainer"></div>
+        <div class="blood-container" id="bloodContainer"></div>
         <img src="photos/guts_eclipse_compressed.jpg" alt="Berserk Eclipse" class="hero-img">
         <div class="hero-overlay">
             <h1>people</h1>
@@ -521,6 +569,7 @@
                 <div class="card tile-1">
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
+                    <div class="card-border-details"></div>
                     <div class="card-content">
                         <div class="card-title">director</div>
                         <div class="card-desc">Prof. Krishnan Baskar</div>
@@ -532,6 +581,7 @@
                 <div class="card tile-4">
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
+                    <div class="card-border-details"></div>
                     <div class="card-content">
                         <div class="card-title">cheif guest</div>
                         <div class="card-desc">Surrounded by the faces of the damned, waiting for the feast to begin.</div>
@@ -542,6 +592,7 @@
                 <div class="card tile-2">
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
+                    <div class="card-border-details"></div>
                     <div class="card-content">
                         <div class="card-title" background-image='Kishorjit.jpg'>registrar</div>
                         <div class="card-desc">Dr Nongmeikapam Kishorjit Singh</div>
@@ -553,6 +604,7 @@
                 <div class="card tile-3">
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
+                    <div class="card-border-details"></div>
                     <div class="card-content">
                         <div class="card-title">student affairs</div>
                         <div class="card-desc">Dr. Akoijam Malemnganbi </div>
@@ -561,21 +613,23 @@
                 </div>
             </div>
             <div class="card-wrapper hidden">
-    <div class="card tile-5">
-        <div class="card-bg"></div>
-        <div class="card-sheen"></div>
-        <div class="card-content">
-            <div class="card-title">Organizing Secretary</div>
-            <div class="card-desc">S Naveen</div>
-            <div class="card-desc">EMAIL ID:-snav230102026@iiitmanipur.ac.in</div>
-        </div>
-    </div>
-</div>
+                <div class="card tile-5">
+                    <div class="card-bg"></div>
+                    <div class="card-sheen"></div>
+                    <div class="card-border-details"></div>
+                    <div class="card-content">
+                        <div class="card-title">Organizing Secretary</div>
+                        <div class="card-desc">S Naveen</div>
+                        <div class="card-desc">EMAIL ID:-snav230102026@iiitmanipur.ac.in</div>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="team-section-wrapper hidden">
             <div class="team-section">
                 <div class="team-title">Band of the Hawks</div>
+                <img src="photos/guts-leaning.png" alt="Guts Leaning" class="guts-leaning-img">
                 <div class="tags-container">
                     <button class="tag" onclick="openTeamOverlay('dac')">Design and Creative team</button>
                     <button class="tag" onclick="openTeamOverlay('pao')">PR and Outreach Team</button>
@@ -608,23 +662,18 @@
             dac: {heading:{name:"design and creative team"},
                 leader: { name: "Rahul Sharma", contact: "rahu230103021@iiitmanipur.ac.in | +916396165371" ,photo:"photos/3021.webp"},
                 colead: [{ name: "Trishansh verma", role: "tris230101068@iiitmanipur.ac.in" ,photo:"photos/1068.webp"}
+                , { name: "Aryan Singhvishesh", role: "arya240102006@iiitmanipur.ac.in" ,photo:"photos/2006.webp" }
                     , { name: "Yogita", role: "yogi230101091@iiitmanipur.ac.in",photo:"photos/1091.webp" }],
-                    members:[{ name: "Harshit Mishra ", role: "hars230101065@iiitmanipur.ac.in" }
-                    , { name: "Sanjeev Singh", role: "sanj240101002@iiitmanipur.ac.in" }
+                    members:[
+                     { name: "Sanjeev Singh", role: "sanj240101002@iiitmanipur.ac.in" }
                     , { name: "Harshit kumar ", role: "hars240101005@iiitmanipur.ac.in" }
                     , { name: "Anant Bhardwaj ", role: "anan240101007@iiitmanipur.ac.in" }
                     , { name: "Sahil", role: "sahi240102015@iiitmanipur.ac.in" }
-
-                    , { name: "Aryan Singhvishesh", role: "arya240102006@iiitmanipur.ac.in" }
                     , { name: "Utkarsh Singh ", role: "utka240101014@iiitmanipur.ac.in" }
                     , { name: "Ratnesh Kumar ", role: "ratn240102054@iiitmanipur.ac.in" }
                     , { name: "Saharsh", role: "saha240104014@iiitmanipur.ac.in" }
                     , { name: "Anshika Sharma ", role: "anshika251046@iiitmanipur.ac.in" }
-                    , { name: "Lakshay Dubey ", role: "lakshay252015@iiitmanipur.ac.in" }
-                    , { name: "Rituraj kumar", role: "rituraj253047@iiitmanipur.ac.in" }
-                    , { name: "Kapil", role: "kapil254014@iiitmanipur.ac.in" }
                     , { name: "Kumari Sakshi", role: "kumari254049@iiitmanipur.ac.in" }
-                    , { name: "Sk salmaan ", role: "shaik255027@iiitmanipur.ac.in" }
                 ]
             },
             pao:{heading:{name:"PR and outreach team"},
@@ -632,7 +681,8 @@
         colead: [    { name: "Pratham Gupta ", role: "prat230103034@iiitmanipur.ac.in" ,photo:"photos/3034.webp"}
             ,{ name: "Mansi Dubey ", role: "mans240101093@iiitmanipur.ac.in",photo:"photos/1093.webp" }
                     , { name: "Alok Kumar ", role: "alok240101051@iiitmanipur.ac.in" ,photo:"photos/1051.webp"}
-                    , { name: "Lavish Sadhwani ", role: "lavi230102040@iiitmanipur.ac.in" ,photo:"photos/2040.webp"}],
+                    , { name: "Lavish Sadhwani ", role: "lavi230102040@iiitmanipur.ac.in" ,photo:"photos/2040.webp"}
+                , { name: "Nikhil Raj ", role: "nikh240103026@iiitmanipur.ac.in" ,photo:"photos/3026.webp" }],
                     members:[ { name: "SHIVAM KUMAR", role: "shiv230102021@iiitmanipur.ac.in" }
                     , { name: "Shivu K C M", role: "shiv230101074@iiitmanipur.ac.in" }
                     , { name: "Arnav Tripathi", role: "arna230101077@iiitmanipur.ac.in" }
@@ -641,7 +691,7 @@
                     , { name: "Sachin kumar", role: "sach230101092@iiitmanipur.ac.in" }
                     , { name: "Swapnil Chate ", role: "swap230102012@iiitmanipur.ac.in" }
                     , { name: "DIXANT SONI", role: "dixa230103029@iiitmanipur.ac.in" }
-                    , { name: "Nikhil Raj ", role: "nikh240103026@iiitmanipur.ac.in" }
+                    
                     , { name: "Anshul yadav", role: "ansh240102052@iiitmanipur.ac.in" }
                     , { name: "Srushti", role: "shru240102074@iiitmanipur.ac.in" }
                     , { name: "Nimisha Rai", role: "nimi240104009@iiitmanipur.ac.in" }
@@ -652,16 +702,9 @@
                     , { name: "Abhinav jha", role: "abhinav254028@iiitmanipur.ac.in" }
                     , { name: "Keshav Israni ", role: "kesh230101090@iiitmanipur.ac.in" }
                     , { name: "Kushaljeet Singh Arora ", role: "kush230101035@iiitmanipur.ac.in" }
-                    , { name: "Rishu Raj", role: "rish240102028@iiitmanipur.ac.in" }
-                    , { name: "GAGAN ", role: "gaga240102036@iiitmanipur.ac.in" }
-                    , { name: "Moh aasik", role: "moha240102068@iiitmanipur.ac.in" }
-                    , { name: "Akshu Yadav ", role: "aksh240104011@iiitmanipur.ac.in" }
-                    , { name: "Chinmayee Sagaria ", role: "chinmayee253048@iiitmanipur.ac.in" }
-                    , { name: "Isha Pandey ", role: "isha253050@iiitmanipur.ac.in" }
-                    , { name: "Varenyam Tiwari", role: "varenyam254027@iiitmanipur.ac.in" }]},
+                    ]},
         
-
-                    spons: {heading:{name:"sponsorship team"},
+            spons: {heading:{name:"sponsorship team"},
                 leader: { name: "Avvaru Naga Prabhas", contact: "avva230101015@iiitmanipur.ac.in | +919398238042",photo:"photos/1015.webp" },
             colead:[ {name: "EESH SAXENA", role: "eesh230101032@iiitmanipur.ac.in",photo:"photos/1032.webp" }
                     , { name: "Leimapokpam Shenita Devi ", role: "leim240102051@iiitmanipur.ac.in",photo:"photos/2051.webp" }],
@@ -682,33 +725,42 @@
         leader:{name:"Shivam Kumar",contact:"shiv230102037@iiitmanipur.ac.in | +918826314381",photo:"photos/2037.webp" },
         colead: [    { name: "Ujjwal Kumar ", role: "ujjw230104028@iiitmanipur.ac.in",photo:"photos/4028.webp"  }
                     , { name: "Saloni Kumari ", role: "salo240101054@iiitmanipur.ac.in",photo:"photos/1054.webp"  }
-                    , { name: "Aman Chahar", role: "aman240103033@iiitmanipur.ac.in" ,photo:"photos/3033.webp" }],
-                    members:[ { name: "Retesh Mourya ", role: "rete230101020@iiitmanipur.ac.in" }
-                    , { name: "Arjeet Singh", role: "arje230101078@iiitmanipur.ac.in" }
-                    , { name: "Krishna Anand ", role: "kris230101082@iiitmanipur.ac.in" }
-                    , { name: "Aditya Sharma ", role: "adit230102059@iiitmanipur.ac.in" }
-                    , { name: "Anuj Gupta ", role: "anuj230102064@iiitmanipur.ac.in" }
-                    , { name: "Divyansh Rathore", role: "divy230103005@iiitmanipur.ac.in" }
-                    , { name: "Siddhardhareddy duggu ", role: "sidd230104006@iiitmanipur.ac.in" }
-                    , { name: "Aryan asit ", role: "arya230104008@iiitmanipur.ac.in" }
-                    , { name: "Rishi Kumar", role: "rish230104012@iiitmanipur.ac.in" }
-                    , { name: "Lipranj Daharwal", role: "lipr230104014@iiitmanipur.ac.in" }
-                    , { name: "SREEVENKAT ELUVA", role: "eluv230104024@iiitmanipur.ac.in" }
-                    , { name: "Ritesh Sharma ", role: "rite240101037@iiitmanipur.ac.in" }
-                    , { name: "Sangam singh ", role: "sang240101038@iiitmanipur.ac.in" }
-                    , { name: "Kumar Gaurav ", role: "kuma240101101@iiitmanipur.ac.in" }
-                    , { name: "Lakshit Khandal ", role: "laks240102067@iiitmanipur.ac.in" }
-                    , { name: "Shubham Shashikant Nalawade ", role: "shub240103011@iiitmanipur.ac.in" }
-                    , { name: "Anuj Rewar ", role: "anuj240103017@iiitmanipur.ac.in" }
-                    , { name: "RISHABH CHAUHAN", role: "rishabh251003@iiitmanipur.ac.in" }
-                    , { name: "Alok Singh ", role: "alok251074@iiitmanipur.ac.in" }
-                    , { name: "Shaurya Gupta", role: "shaurya253004@iiitmanipur.ac.in" }
-                    , { name: "ZAIRIK QURESHI ", role: "zairik253070@iiitmanipur.ac.in" }
-                    , { name: "Aditya Goswami ", role: "aditya255034@iiitmanipur.ac.in" }
+                    ],
+                    members:[
+                     { name: "Aman Chahar", role: "aman240103033@iiitmanipur.ac.in"  }
+                     ,{name:"Tanmay Jasu", role:" tanmay252053@iiitmanipur.ac.in"}
+                    ,{ name: "Retesh Mourya ", role: "rete230101020@iiitmanipur.ac.in" }
+                    , { name: "Aarav Sri Krishan", role: "aara240102071@iiitmanipur.ac.in" }
+                    , { name: "Kumar Gaurav ", role: "kuma240101101@iiitmanipur.ac.in " }
+                    , { name: "Anuj Rewar  ", role: "anuj240103017@iiitmanipur.ac.in " }
+                    , { name: "Saurabh sati ", role: " saur240103024@iiitmanipur.ac.in" }
+                    , { name: "Lakshit Khandal ", role: " laks240102067@iiitmanipur.ac.in" }
                     , { name: "Saptaparno Chatterjee", role: "saptaparno256006@iiitmanipur.ac.in" }
-                    , { name: "Bibaswan Sarkar", role: "bibaswan256033@iiitmanipur.ac.in" }
+                    , { name: "Shaurya Gupta ", role: "shaurya253004@iiitmanipur.ac.in " }
+                    , { name: "Alok Singh", role: "alok251074@iiitmanipur.ac.in " }
+                    , { name: "Arihant Mishra ", role: " arihant251072@iiitmanipur.ac.in" }
+                    , { name: "RISHABH CHAUHAN", role: " rishabh251003@iiitmanipur.ac.in" }
+                    , { name: "ZAIRIK QURESHI ", role: " zairik253070@iiitmanipur.ac.in" }
+                    , { name: "Ashutosh Kumar Mehta", role: " ashutosh252052@iiitmanipur.ac.in" }
+                    , { name: "Sanket sunil singh", role: " sanket254016@iiitmanipur.ac.in" }
+                    , { name: "Bibaswan Sarkar ", role: " bibaswan256033@iiitmanipur.ac.in" }
+                    , { name: "Abhinav", role: " abhinav251036@iiitmanipur.ac.in " }
+                    , { name: "Dipali ", role: "dipali254048@iiitmanipur.ac.in " }
+                    , { name: "Shiwani Anand ", role: " shiwani254041@iiitmanipur.ac.in" }
+                    , { name: "Pranavi Pathak ", role: "pranavi252035@iiitmanipur.ac.in " }
+                    , { name: "Anuj Gupta ", role: "anuj230102064@iiitmanipur.ac.in " }
+                    , { name: "Lipranj Dharwal ", role: "lipr230104014@iiitmanipur.ac.in " }
+                    , { name: "Aditya Sharma ", role: " adit230102059@iiitmanipur.ac.in" }
+                    , { name: "Shree Venkat", role: "eluv230104024@iiitmanipur.ac.in " }
+                    , { name: "Aryan Asit", role: " arya230104007@iiitmanipur.ac.in" }
+                    , { name: "Krishna Anand ", role: "kris230101082@iiitmanipur.ac.in " }
+                    , { name: "Arjeet Singh ", role: " arje230101078@iiitmanipur.ac.in" }
+                    , { name: "Ankit Joshi ", role: "anki2301040009@iiitmanipur.ac.in" }
+                    , { name: "Siddhardhareddy duggu", role: " sidd230104006@iiitmanipur.ac.in" }
+                    , { name: "Aryan", role: " aryan251008@iiitmanipur.ac.in" }
+                    , { name: "Akshat Chaturvedi", role: " aksh240102059@iiitmanipur.ac.in" }
                     ]},
-                    cstm:{heading:{name:"Management team"},
+            cstm:{heading:{name:"Management team"},
         leader:{name:"Aniket Raj",contact:"anik230103030@iiitmanipur.ac.in | +917900905797",photo:"photos/3030.webp"},
         colead: [    { name: "Aishwary Raj", role: "aish230104023@iiitmanipur.ac.in",photo:"photos/4023.webp" }
                     , { name: "Rinyin", role: "rinyin251087@iiitmanipur.ac.in",photo:"photos/1087.webp" }],
@@ -734,30 +786,40 @@
                     , { name: "Aman Singh ", role: "aman254045@iiitmanipur.ac.in" }
                     , { name: "Dipali ", role: "dipali254048@iiitmanipur.ac.in" }
                     ]},
-                    cege: {heading:{name:"Cultural events and Guest reception team"},
-                leader: { name: "Piyush prasad", contact: "piyu230102065@iiitmanipur.ac.in | +919142396828",photo:"photos/2065.webp" },
-            colead:[ {name: "SINTU RAY ", role: "sint240104015@iiitmanipur.ac.in",photo:"photos/4015.webp" }
-                    , { name: "Jhansi Rani Majhi ", role: "jhansi255029@iiitmanipur.ac.in",photo:"photos/5029.webp" }],
-                    members:[{ name: "Rishabh Trivedi ", role: "rish240101039@iiitmanipur.ac.in" }
-                    , { name: "Ashok Godara ", role: "asho240102009@iiitmanipur.ac.in" }
-                    , { name: "Prashant ", role: "prashant253076@iiitmanipur.ac.in" }
-                    , { name: "Rishav Raj", role: "rishav253081@iiitmanipur.ac.in" }
-                    , { name: "Priyanshu ", role: "priy240102029@iiitmanipur.ac.in" }]},
+            cege: {heading:{name:"Cultural events and Guest reception team"},
+                leader: { name: "Harshit Mishra", contact: "hars230101065@iiitmanipur.ac.in | +919628492644",photo:"photos/1065.webp" },
+            colead:[ {name: "Aditi Singh ", role: "adit230101066@iiitmanipur.ac.in",photo:"photos/1066.webp" }
+                   ],
+                    members:[{ name: "Alok Singh ", role: "alok251074@iiitmanipur.ac.in" }
+                    , { name: "Jhansi Rani Majhi  ", role: "jhansi255029@iiitmanipur.ac.in" }
+                    , { name: "RISHU RAJ", role: "rish240102028@iiitmanipur.ac.in" }
+                    , { name: "Keshav Israni ", role: "kesh230101090@iiitmanipur.ac.in" }
+                    , { name: "Ashok Godara", role: "asho240102009@iiitmanipur.ac.in" }
+                    , { name: "Rachit Srivastava ", role: "rach230101085@iiitmanipur.ac.in" }
+                    , { name: "SINTU RAY ", role: "Sint240104015@iiitmanipur.ac.in" }               
+                    , { name: "Piyush prasad", role: "piyu30102065@iiitmanipur.ac.in" }
+                    , { name: "Smruti Sudha Sahu ", role: "smruti252037@iiitmanipur.ac.in" }
+                    , { name: "Arunima Das", role: "arun230101011@iiitmanipur.ac.in" }
+                    , { name: "Devika ", role: "devi230101083@iiitmanipur.ac.in" }
+                    , { name: "Aishwarya Sharma ", role: "aish240101088@iiitmanipur.ac.in" }
+                    , { name: "Aarav Joshi ", role: "aarav253039@iiitmanipur.ac.in" }
+                    , { name: "Siddhi Singh Rajput ", role: "siddhi254030@iiitmanipur.ac.in" }
+                    , { name: "Utkarsh Jha", role: "utkarsh251084@iiitmanipur.ac.in" }
+                    , { name: "Saksham Gupta ", role: "saksham251081@iiitmanipur.ac.in" }
+                ]},
                    
-                     soeh: {heading:{name:"Stall organizing, Event handling Team"},
+            soeh: {heading:{name:"Stall organizing, Event handling Team"},
                 leader: { name: "Sandeep Kumar Saini ", contact: "sand230101029@iiitmanipur.ac.in | +917850832958" ,photo:"photos/1029.webp"},
             colead:[ {name: "Nancy", role: "nanc240101052@iiitmanipur.ac.in",photo:"photos/1052.webp" }
                     , { name: "Rishi Babu ", role: "rishi253084@iiitmanipur.ac.in",photo:"photos/3084.webp" }],
                     members:[{ name: "Abhay", role: "abhay252014@iiitmanipur.ac.in" }
                     , { name: "Nabajit Das ", role: "nabajit253027@iiitmanipur.ac.in" }
-                    , { name: "Ujjwal Tiwari", role: "ujjwal253071@iiitmanipur.ac.in"
- }
+                    , { name: "Ujjwal Tiwari", role: "ujjwal253071@iiitmanipur.ac.in" }
                     , { name: "Shaurya Singh ", role: "shaurya253074@iiitmanipur.ac.in" }
                     , { name: "Piyush yadav ", role: "piyush253078@iiitmanipur.ac.in" }
                     , { name: "Ankit Yadav", role: "ankit254053@iiitmanipur.ac.in" }
                     ]},
-                     website: {heading:{name:"Website Team"},
-                
+            website: {heading:{name:"Website Team"},
                      members:[ 
                           { name: "Aryan Singhvishesh", role: "arya240102006@iiitmanipur.ac.in" }
                          ,{ name: "Sanjeev Singh", role: "sanj240101002@iiitmanipur.ac.in" }
@@ -765,113 +827,183 @@
                          , { name: "Sahil", role: "sahi240102015@iiitmanipur.ac.in" }
                          ,{ name: "Anant Bhardwaj ", role: "anan240101007@iiitmanipur.ac.in" }
                     ]},
-                };
+        };
 
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.card-wrapper, .team-section-wrapper, footer').forEach((el) => observer.observe(el));
+        const mobileCardObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // If the screen is mobile-sized
+                if (window.innerWidth <= 768) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view'); // Show details
+                    } else {
+                        entry.target.classList.remove('in-view'); // Hide details when scrolled past
+                    }
+                }
+            });
+        }, { 
+            // -30% top and -30% bottom means the "active zone" is the middle 40% of the screen
+            rootMargin: '-30% 0px -30% 0px', 
+            threshold: 0 
+        });
 
-        // 3D Tilt Effect
+        document.querySelectorAll('.card').forEach(card => mobileCardObserver.observe(card));
+
+        // 3D Tilt Effect & Auto-Face Front Logic
         document.querySelectorAll('.card').forEach(card => {
+            let snapTimeout;
+
+            card.addEventListener('mouseenter', () => {
+                clearTimeout(snapTimeout);
+                card.dataset.snapping = 'true';
+                
+                const computedStyle = window.getComputedStyle(card);
+                const currentTransform = computedStyle.transform;
+                
+                card.style.transform = currentTransform;
+                card.style.animation = 'none';
+                
+                void card.offsetWidth;
+                
+                card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s';
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.05, 1.05, 1.05)`;
+                
+                snapTimeout = setTimeout(() => {
+                    card.dataset.snapping = 'false';
+                }, 400);
+            });
+
             card.addEventListener('mousemove', (e) => {
+                if (card.dataset.snapping === 'true') return; 
+
                 const rect = card.getBoundingClientRect();
                 const rotateX = ((e.clientY - rect.top - rect.height/2) / (rect.height/2)) * -12; 
                 const rotateY = ((e.clientX - rect.left - rect.width/2) / (rect.width/2)) * 12;
+                
+                card.style.transition = 'transform 0.1s ease-out';
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
             });
-            card.addEventListener('mouseleave', () => card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)');
+
+            card.addEventListener('mouseleave', () => {
+                clearTimeout(snapTimeout);
+                card.dataset.snapping = 'false';
+                
+                card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s'; 
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)'; 
+                
+                setTimeout(() => {
+                    if (!card.matches(':hover')) {
+                        card.style.transform = '';
+                        card.style.animation = ''; 
+                    }
+                }, 600);
+            });
         });
 
         const overlay = document.getElementById('teamOverlay');
         const membersGrid = document.getElementById('membersGrid');
         const overlayTitle = document.getElementById('overlayTitle');
-function openTeamOverlay(category) {
-    const grid = document.getElementById('membersGrid');
-    const title = document.getElementById('overlayTitle');
-    grid.innerHTML = '';
-    const data = teamData[category];
-    title.textContent = data.heading.name.toUpperCase();
+        
+        function openTeamOverlay(category) {
+            const grid = document.getElementById('membersGrid');
+            const title = document.getElementById('overlayTitle');
+            grid.innerHTML = '';
+            const data = teamData[category];
+            title.textContent = data.heading.name.toUpperCase();
 
-    if (!data) return;
-    membersGrid.style.display="grid";
-    if (category === 'website') {
-    membersGrid.style.display="flex";
-        // Create the Parallel Tab Layout for Website Team
-        const tabsContainer = document.createElement('div');
-        tabsContainer.className = 'website-tabs-container';
+            if (!data) return;
+            membersGrid.style.display="grid";
+            if (category === 'website') {
+                membersGrid.style.display="flex";
+                const tabsContainer = document.createElement('div');
+                tabsContainer.className = 'website-tabs-container';
 
-        // Display first 5 members as vertical parallel tabs
-        data.members.slice(0, 5).forEach((m, index) => {
-            const tab = document.createElement('div');
-            tab.className = `vertical-tab tab-${index}`;
-            tab.innerHTML = `
-                <div class="tab-overlay"></div>
-                <div class="tab-content-vertical">
-                    <span class="tab-name-vert">${m.name}</span>
-                    <span class="tab-role-vert">${m.role}</span>
-                </div>
-            `;
-            tabsContainer.appendChild(tab);
-        });
-        grid.appendChild(tabsContainer);
-    } else {
-        // Keep your original code for all other teams
-        const banner = document.createElement('div');
-        banner.className = 'leader-banner';
-        banner.innerHTML = `
-        <img src="${data.leader.photo || 'default-avatar.jpg'}" class="leader-photo" alt="${data.leader.name}">
-           <div class="leader-text-document"> <h3>LEADER: ${data.leader.name}</h3>
-            <div class="leader-contact">CONTACT: ${data.leader.contact}</div>
-            </div>
-        `;
-        grid.appendChild(banner);
-        data.colead.forEach(k=> {
-            const banner = document.createElement('div');
-            banner.className = 'leader-banner';
-        banner.innerHTML = `
-        <img src="${k.photo || 'default-avatar.jpg'}" class="leader-photo" alt="${k.name}">
-                <div class="leader-text-content">
-            <h4>CO-LEAD: ${k.name}</h4>
-            <div class="leader-contact">CONTACT: ${k.role}</div>
-                </div>
-            `;
-            grid.appendChild(banner);
-        });
+                data.members.slice(0, 5).forEach((m, index) => {
+                    const tab = document.createElement('div');
+                    tab.className = `vertical-tab tab-${index}`;
+                    tab.innerHTML = `
+                        <div class="tab-overlay"></div>
+                        <div class="tab-content-vertical">
+                            <span class="tab-name-vert">${m.name}</span>
+                            <span class="tab-role-vert">${m.role}</span>
+                        </div>
+                    `;
+                    tabsContainer.appendChild(tab);
+                });
+                grid.appendChild(tabsContainer);
+            } else {
+                const banner = document.createElement('div');
+                banner.className = 'leader-banner';
+                banner.innerHTML = `
+                <img src="${data.leader.photo || 'default-avatar.jpg'}" class="leader-photo" alt="${data.leader.name}">
+                   <div class="leader-text-document"> <h3>LEADER: ${data.leader.name}</h3>
+                    <div class="leader-contact">CONTACT: ${data.leader.contact}</div>
+                    </div>
+                `;
+                grid.appendChild(banner);
+                data.colead.forEach(k=> {
+                    const banner = document.createElement('div');
+                    banner.className = 'leader-banner';
+                banner.innerHTML = `
+                <img src="${k.photo || 'default-avatar.jpg'}" class="leader-photo" alt="${k.name}">
+                        <div class="leader-text-content">
+                    <h4>CO-LEAD: ${k.name}</h4>
+                    <div class="leader-contact">CONTACT: ${k.role}</div>
+                        </div>
+                    `;
+                    grid.appendChild(banner);
+                });
 
-        data.members.forEach(m => {
-            const div = document.createElement('div');
-            div.className = 'member-row';
-            div.innerHTML = `
-                <div class="member-info">
-                    <span class="member-name">${m.name}</span><br>
-                    <span class="member-role">${m.role}</span>
-                </div>
-            `;
-            grid.appendChild(div);
-        });
-    }
+                data.members.forEach(m => {
+                    const div = document.createElement('div');
+                    div.className = 'member-row';
+                    div.innerHTML = `
+                        <div class="member-info">
+                            <span class="member-name">${m.name}</span><br>
+                            <span class="member-role">${m.role}</span>
+                        </div>
+                    `;
+                    grid.appendChild(div);
+                });
+            }
 
-    document.getElementById('teamOverlay').classList.add('active');
-    document.body.classList.add('no-scroll');
-}
+            document.getElementById('teamOverlay').classList.add('active');
+            document.body.classList.add('no-scroll');
+        }
+        
         function closeTeamOverlay() { overlay.classList.remove('active'); document.body.classList.remove('no-scroll'); }
         overlay.addEventListener('click', (e) => { if (e.target === overlay) closeTeamOverlay(); });
 
         // Ash particle animation
-        const ashContainer = document.getElementById('ashContainer');
-        function createAsh() {
-            const ash = document.createElement('div');
-            ash.className = 'ash';
-            const size = Math.random() * 4 + 2 + 'px';
-            ash.style.width = size; ash.style.height = size;
-            ash.style.left = Math.random() * 100 + 'vw';
-            ash.style.animation = `floatUp ${Math.random() * 5 + 3}s linear forwards`;
-            ashContainer.appendChild(ash);
-            setTimeout(() => ash.remove(), 8000); 
-        }
-        setInterval(createAsh, 200);
+       const bloodContainer = document.getElementById('bloodContainer');
+
+function createBloodDrop() {
+    const drop = document.createElement('div');
+    drop.className = 'blood-drop';
+    
+    // Randomize droplet thickness (thin) and length (long)
+    const width = Math.random() * 2 + 1 + 'px'; 
+    const height = Math.random() * 15 + 10 + 'px'; 
+    
+    drop.style.width = width; 
+    drop.style.height = height;
+    drop.style.left = Math.random() * 100 + 'vw';
+    
+    // Randomize falling speed (faster than the old floating ash)
+    drop.style.animation = `rainBlood ${Math.random() * 2 + 1.5}s linear forwards`;
+    
+    bloodContainer.appendChild(drop);
+    
+    // Remove the drop from the DOM after it falls off screen
+    setTimeout(() => drop.remove(), 4000); 
+}
+
+// Spawn droplets frequently for a "raining" feel (every 70 milliseconds)
+setInterval(createBloodDrop, 70);
     </script>
 </body>
-</html> 
+</html>
