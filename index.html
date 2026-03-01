@@ -122,33 +122,75 @@
             position: relative; 
             z-index: 4; 
         }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 40px; margin-bottom: 80px; }
-        .card-wrapper, .team-section-wrapper { opacity: 0; transform: translateY(100px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        /* --- UPDATED: Horizontal Scroll Container --- */
+.grid { 
+    display: flex;                /* Force cards into a row */
+    flex-wrap: nowrap;            /* Prevent wrapping to the next line */
+    overflow-x: auto;            /* Enable horizontal scrolling */
+    overflow-y: hidden;           /* Clean up vertical space */
+    gap: 30px;                    /* Space between cards */
+    padding: 40px 20px;          /* Space for card shadows */
+    margin-bottom: 80px; 
+    scroll-snap-type: x mandatory; /* Makes cards 'snap' into place */
+    -webkit-overflow-scrolling: touch; /* Smooth scroll for mobile */
+}
+
+/* --- Styled Red "Eclipse" Scrollbar --- */
+.grid::-webkit-scrollbar {
+    height: 8px;
+}
+
+.grid::-webkit-scrollbar-track {
+    background: #050505;
+    border-radius: 10px;
+}
+
+.grid::-webkit-scrollbar-thumb {
+    background: linear-gradient(to right, #800000, #ff0000);
+    border-radius: 10px;
+    border: 1px solid #000;
+}
+.card-wrapper {
+    flex: 0 0 350px;             /* Stay exactly 350px wide, do not shrink */
+    opacity: 0; 
+    transform: translateY(100px); 
+    transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+    scroll-snap-align: center;    /* Center the card when scrolling stops */
+}
+        .team-section-wrapper { opacity: 0; transform: translateY(100px); transition: all 1s cubic-bezier(0.16, 1, 0.3, 1); }
         .show { opacity: 1; transform: translateY(0); }
 
         /* --- CARDS & DETAILING --- */
-        .card {
-            position: relative; height: 450px; width: 100%; background-color: #0d0d0d; border-radius: 12px;
-            cursor: pointer; transform-style: preserve-3d; 
-            animation: continuousSpin 12s linear infinite;
-            transition: box-shadow 0.3s ease, border-color 0.3s;
-            /* Slight red glow to the default rotating state */
-            box-shadow: 0 0 20px rgba(200, 0, 0, 0.25), 0 10px 30px -10px rgba(0,0,0,0.9); overflow: hidden; 
-            border: 1px solid rgba(150, 0, 0, 0.25); 
-        }
+        /* Update this block in your CSS */
+.card {
+    position: relative; 
+    height: 450px; 
+    width: 100%; 
+    background-color: #0d0d0d; 
+    border-radius: 12px;
+    cursor: pointer; 
+    transform-style: preserve-3d; 
+    /* REMOVE THIS LINE: animation: continuousSpin 12s linear infinite; */
+    
+    /* ADD THIS: Keeps the card flat and facing the user */
+    transform: perspective(1000px) rotateY(0deg); 
+    
+    transition: box-shadow 0.3s ease, border-color 0.3s, transform 0.5s ease;
+    box-shadow: 0 0 20px rgba(200, 0, 0, 0.25), 0 10px 30px -10px rgba(0,0,0,0.9); 
+    overflow: hidden; 
+    border: 1px solid rgba(150, 0, 0, 0.25); 
+}
         
-        .card:hover { 
-            z-index: 10; 
-            border-color: #ff0000;
-            /* Expanded, brighter red glow on hover */
-            box-shadow: 0 0 45px rgba(220, 0, 0, 0.6), 0 0 40px rgba(180, 0, 0, 0.4) inset;
-        }
+       .card:hover { 
+    z-index: 10; 
+    border-color: #ff0000;
+    /* This makes the card pop toward the user slightly on hover */
+    transform: perspective(1000px) rotateY(0deg) scale(1.05) translateZ(20px);
+    box-shadow: 0 0 45px rgba(220, 0, 0, 0.6), 0 0 40px rgba(180, 0, 0, 0.4) inset;
+}
 
         /* Stagger animations so cards rotate at different angles */
-        .card-wrapper:nth-child(2) .card { animation-delay: -2s; }
-        .card-wrapper:nth-child(3) .card { animation-delay: -5s; }
-        .card-wrapper:nth-child(4) .card { animation-delay: -8s; }
-        .card-wrapper:nth-child(5) .card { animation-delay: -10s; }
+        
 
         /* Corner Brackets Overlay */
         .card-border-details {
@@ -410,18 +452,19 @@
 }
 .slider {
     position: relative;
-    /* Cards are now smaller (was 220x320) */
     width: 180px;
     height: 260px;
     transform-style: preserve-3d;
-    animation: autoRun 20s linear infinite;
+    /* We keep the animation, but we will control the playState or transform via JS */
+    
     z-index: 2;
+   transition: transform 0.8s ease-out; /* Smooths out the scroll rotation */
 }
 
 /* Pause the rotation when hovering over the cards */
-/* .slider-container:hover .slider {
+ /* .slider-container:hover .slider {
     animation-play-state: paused;
-} */
+}  */
 
 @keyframes autoRun {
     from { transform: perspective(1200px) rotateY(0deg); }
@@ -1095,7 +1138,40 @@
                     `;
                     slider.appendChild(item);
                 });
-                
+                let currentRotation = 0;
+    let isAutoRotating = true;
+    let scrollTimeout;
+
+    // --- THE FIX: JavaScript Animation Loop ---
+    function rotateSlider() {
+        if (isAutoRotating) {
+            currentRotation -= 0.2; // Adjust for auto-spin speed
+            slider.style.transform = `perspective(1200px) rotateY(${currentRotation}deg)`;
+        }
+        // Only keep animating if the overlay is still open
+        if (overlay.classList.contains('active')) {
+            requestAnimationFrame(rotateSlider);
+        }
+    }
+
+    // --- THE FIX: Scroll Interaction ---
+    sliderContainer.addEventListener('wheel', (e) => {
+        e.preventDefault(); 
+        isAutoRotating = false; // Pause auto-rotation
+        clearTimeout(scrollTimeout);
+        
+        // Update the same variable used by the auto-rotator
+        currentRotation += e.deltaY / 5; 
+        slider.style.transform = `perspective(1200px) rotateY(${currentRotation}deg)`;
+
+        // Resume auto-rotation after 3 seconds of silence
+        scrollTimeout = setTimeout(() => {
+            isAutoRotating = true;
+        }, 3000);
+    }, { passive: false });
+
+    // Start the loop
+    requestAnimationFrame(rotateSlider);
                 sliderContainer.appendChild(slider);
                 grid.appendChild(sliderContainer);
                 
