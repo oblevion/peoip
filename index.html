@@ -475,8 +475,10 @@
 
 .slider .item {
     position: absolute;
-    inset: 0;
-    transform: rotateY(calc((360deg / var(--quantity)) * var(--position))) translateZ(var(--slider-radius));
+    inset: 0 0 0 0;
+    /* transform: rotateY(calc((360deg / var(--quantity)) * var(--position))) translateZ(var(--slider-radius)); */
+    transform: rotateY(calc( (var(--position) - 1) * (360 / var(--quantity)) * 1deg)) 
+               translateZ(var(--slider-radius));
     background-color: #1a1a1a;
     border: 1px solid rgba(255, 0, 0, 0.4);
     border-radius: 12px;
@@ -653,7 +655,7 @@
             font-size: 0.9rem; color: #aaa; font-style: italic; word-break: break-all;
         }
         
-        #overlayTitle { font-size: 2.5rem; text-transform: uppercase; letter-spacing: 10px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 10px; text-align: center; }
+        #overlayTitle { font-size: 2.rem; text-transform: uppercase; letter-spacing: 10px; margin-bottom: 20px; border-bottom: 1px solid #222; padding-bottom: 10px; text-align: center; }
         footer { text-align: center; padding: 60px; color: #555; font-size: 0.8rem; opacity: 0; transition: opacity 1s ease; }
         footer.show { opacity: 1; }
 
@@ -747,22 +749,22 @@
 
     /* Website Team 3D Slider Adjustments */
     .slider-container {
-        --slider-radius: 180px; /* Bring cards closer to the center */
-        height: 450px;
+        --slider-radius: 140px; /* Bring cards closer to the center */
+        height: 400px;
         
     }
 
     .slider {
-        width: 120px; /* Narrower cards in the 3D circle */
-        height: 180px;
+        width: 110px; /* Narrower cards in the 3D circle */
+        height: 160px;
     }
 
     /* Make the center 3D model smaller so it doesn't overlap cards */
-    /* .center-model {
+    .center-model {
         width: 300px;
-        height: 600px
+        height: 600px;
        
-    } */
+    }
 
     /* Adjust Brand of Sacrifice icon size */
     .brand-image {
