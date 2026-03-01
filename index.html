@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Eclipse - Berserk Tribute</title>
-    
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
     <style>
         /* --- RESET & BASIC STYLES --- */
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -395,21 +395,19 @@
         /* --- 3D SLIDER FOR WEBSITE TEAM --- */
 /* --- 3D SLIDER FOR WEBSITE TEAM --- */
 .slider-container {
-    /* Reduced from 300px to make the circle tighter */
     --slider-radius: 270px; 
-    
     position: relative;
     width: 100%;
-    /* Reduced height from 500px to 400px to fit smaller cards */
     height: 500px; 
     display: flex;
     justify-content: center;
     align-items: center;
+    /* Crucial: allows children to exist in the same 3D space */
+    transform-style: preserve-3d; 
     perspective: 1200px;
-    overflow: hidden;
+    overflow: visible; /* Changed from hidden to prevent clipping 3D effects */
     margin-top: 40px;
 }
-
 .slider {
     position: relative;
     /* Cards are now smaller (was 220x320) */
@@ -508,6 +506,24 @@
     .slider-member-role {
         font-size: 0.6rem;
     }
+}
+.center-model {
+    position: absolute;
+    width: 450px; /* Adjusted size */
+    height: 450px;
+    top: 50%;
+    left: 50%;
+    /* Center it perfectly at the 0,0,0 coordinate */
+    transform: translate(-50%, -50%) translateZ(0); 
+    z-index: 1; 
+    pointer-events: none;
+}
+
+.center-model model-viewer {
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    filter: drop-shadow(0 0 20px rgba(255, 0, 0, 0.6)); 
 }
         
         .vertical-tab {
@@ -1034,25 +1050,40 @@
 
             if (!data) return;
             membersGrid.style.display="grid";
-            if (category === 'website') {
-                // Change layout for the 3D slider to work correctly
+           if (category === 'website') {
                 membersGrid.style.display="block"; 
                 
                 const sliderContainer = document.createElement('div');
                 sliderContainer.className = 'slider-container';
                 
+                // --- NEW: Add the 3D Model to the center ---
+               // --- NEW: Add the 3D Model to the center ---
+                const centerModel = document.createElement('div');
+                centerModel.className = 'center-model';
+                centerModel.innerHTML = `
+                    <model-viewer 
+                        src="photos/model/guts.glb" 
+                        alt="3D center model" 
+                        autoplay
+                        animation-name="*"
+                        disable-zoom
+                        interaction-prompt="none"
+                        camera-orbit="0deg 75deg 105%"
+                        camera-controls>
+                    </model-viewer>
+                `;
+                sliderContainer.appendChild(centerModel);
+                // -------------------------------------------
+
                 const slider = document.createElement('div');
                 slider.className = 'slider';
-                // Set a CSS variable for total quantity of cards
                 slider.style.setProperty('--quantity', data.members.length);
                 
-                // Using the exact same images you had for the vertical tabs
                 const bgImages = ['photos/guts.webp', 'photos/griffith.webp', 'photos/casca.webp', 'photos/skull.webp', 'photos/zodd.webp'];
 
                 data.members.forEach((m, index) => {
                     const item = document.createElement('div');
                     item.className = 'item';
-                    // Set a CSS variable for the card's specific position in the circle
                     item.style.setProperty('--position', index + 1);
                     
                     const bgImg = bgImages[index % bgImages.length];
@@ -1060,7 +1091,7 @@
 
                     item.innerHTML = `
                         <span class="slider-member-name">${m.name}</span>
-                        
+                    
                     `;
                     slider.appendChild(item);
                 });
