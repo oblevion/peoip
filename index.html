@@ -509,8 +509,8 @@
 }
 .center-model {
     position: absolute;
-    width: 450px; /* Adjusted size */
-    height: 450px;
+    width: 650px; /* Adjusted size */
+    height: 650px;
     top: 50%;
     left: 50%;
     /* Center it perfectly at the 0,0,0 coordinate */
@@ -1062,13 +1062,13 @@
                 centerModel.className = 'center-model';
                 centerModel.innerHTML = `
                     <model-viewer 
-                        src="photos/model/guts.glb" 
+                        src="photos/model/guts1.glb" 
                         alt="3D center model" 
                         autoplay
                         animation-name="*"
                         disable-zoom
                         interaction-prompt="none"
-                        camera-orbit="0deg 75deg 105%"
+                        camera-orbit="-10deg 90deg 105%"
                         camera-controls>
                     </model-viewer>
                 `;
