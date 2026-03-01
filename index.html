@@ -776,6 +776,50 @@
         width: 80px;
     }
 }
+/* Container for arrows and grid */
+.horizontal-scroll-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+/* Base Arrow Styles */
+.nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.7);
+    color: #ff0000;
+    border: 1px solid #800000;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 10;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background: #800000;
+    color: white;
+    box-shadow: 0 0 20px #ff0000;
+}
+
+.left-btn { left: 10px; }
+.right-btn { right: 10px; }
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+    .grid {
+        scroll-behavior: smooth; /* Essential for the auto-slide animation */
+    }
+}
     </style>
 </head>
 <body>
@@ -797,6 +841,8 @@
     </header>
 
     <div class="container">
+        <div class="horizontal-scroll-wrapper">
+    <button class="nav-btn left-btn" onclick="scrollGrid(-1)">&#10094;</button>
         <div class="grid">
             <div class="card-wrapper hidden">
                 <div class="card tile-1">
@@ -858,6 +904,8 @@
                 </div>
             </div>
         </div>
+        <button class="nav-btn right-btn" onclick="scrollGrid(1)">&#10095;</button>
+</div>
 
         <div class="team-section-wrapper hidden">
             <div class="team-section">
@@ -902,9 +950,11 @@
                     , { name: "Harshit kumar ", role: "hars240101005@iiitmanipur.ac.in" }
                     , { name: "Anant Bhardwaj ", role: "anan240101007@iiitmanipur.ac.in" }
                     , { name: "Sahil", role: "sahi240102015@iiitmanipur.ac.in" }
+                    , { name: "Harshit Mishra", role: " hars230101065@iiitmanipur.ac.in" }
+                    , { name: "Deepak Raj", role: " deep240102003@iiitmanipur.ac.in" }
                     , { name: "Utkarsh Singh ", role: "utka240101014@iiitmanipur.ac.in" }
-                    , { name: "Ratnesh Kumar ", role: "ratn240102054@iiitmanipur.ac.in" }
                     , { name: "Saharsh", role: "saha240104014@iiitmanipur.ac.in" }
+                    , { name: "Ananya Anand", role: "ananya252030@iiitmanipur.ac.in" }
                     , { name: "Anshika Sharma ", role: "anshika251046@iiitmanipur.ac.in" }
                     , { name: "Kumari Sakshi", role: "kumari254049@iiitmanipur.ac.in" }
                 ]
@@ -1303,6 +1353,40 @@ function createBloodDrop() {
 
 // Spawn droplets frequently for a "raining" feel (every 70 milliseconds)
 setInterval(createBloodDrop, 70);
+const gridContainer = document.querySelector('.grid');
+let autoScrollInterval;
+
+// Function to move the scroll
+function scrollGrid(direction) {
+    const scrollAmount = gridContainer.clientWidth * 0.8; // Move 80% of screen width
+    gridContainer.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+    });
+    
+    // Reset timer when user manually interacts
+    startAutoScroll();
+}
+
+// Automatic Slide Logic
+function startAutoScroll() {
+    clearInterval(autoScrollInterval);
+    autoScrollInterval = setInterval(() => {
+        // If we reach the end, go back to the start
+        if (gridContainer.scrollLeft + gridContainer.clientWidth >= gridContainer.scrollWidth - 10) {
+            gridContainer.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+            scrollGrid(1);
+        }
+    }, 4000); // 4 seconds per slide
+}
+
+// Stop auto-scroll when user touches the screen
+gridContainer.addEventListener('touchstart', () => clearInterval(autoScrollInterval));
+gridContainer.addEventListener('touchend', () => startAutoScroll());
+
+// Initialize
+startAutoScroll();
     </script>
 </body>
 </html>
