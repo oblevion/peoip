@@ -249,11 +249,14 @@ body::-webkit-scrollbar {
             box-shadow: inset 0 0 60px rgba(0,0,0,0.9); /* Deep inner shadow */
         }
         .tile-1 .card-bg { background-image: url('photos/director.webp'); }
-        .tile-2 .card-bg { background-image: url('photos/Kishorjit.webp'); }
-        .tile-3 .card-bg { background-image: url('photos/Malemnganbi.webp'); }
-        .tile-4 .card-bg { background-image: url('photos/guest_image.webp'); }
+        .tile-2 .card-bg { background-image: url('photos/guest_image.webp'); }
+        .tile-3 .card-bg { background-image: url('photos/Kishorjit.webp'); }
+        .tile-4 .card-bg { background-image: url('photos/Malemnganbi.webp'); }
         .tile-5 .card-bg { background-image: url('photos/1099.webp'); }
-        
+        .tile-6 .card-bg { background-image: url('photos/1026.webp'); }
+        .tile-7 .card-bg { background-image: url('photos/1048.webp'); }
+        .tile-8 .card-bg { background-image: url('photos/1025.webp'); }
+        .tile-9 .card-bg { background-image: url('photos/2060.webp'); }
         .card:hover .card-bg { filter: grayscale(10%) brightness(0.9) contrast(1.1); box-shadow: inset 0 0 30px rgba(0,0,0,0.7); }
         
         .card-content {
@@ -827,8 +830,8 @@ body::-webkit-scrollbar {
     box-shadow: 0 0 20px #ff0000;
 }
 
-.left-btn { left: 10px; }
-.right-btn { right: 10px; }
+.left-btn { left: -30px; }
+.right-btn { right: -20px; }
 
 /* Mobile Optimizations */
 @media (max-width: 768px) {
@@ -873,7 +876,7 @@ body::-webkit-scrollbar {
                 </div>
             </div>
             <div class="card-wrapper hidden">
-                <div class="card tile-4">
+                <div class="card tile-2">
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
                     <div class="card-border-details"></div>
@@ -884,7 +887,7 @@ body::-webkit-scrollbar {
                 </div>
             </div>
             <div class="card-wrapper hidden">
-                <div class="card tile-2">
+                <div class="card tile-3">
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
                     <div class="card-border-details"></div>
@@ -896,7 +899,7 @@ body::-webkit-scrollbar {
                 </div>
             </div>
             <div class="card-wrapper hidden">
-                <div class="card tile-3">
+                <div class="card tile-4">
                     <div class="card-bg"></div>
                     <div class="card-sheen"></div>
                     <div class="card-border-details"></div>
@@ -919,6 +922,55 @@ body::-webkit-scrollbar {
                     </div>
                 </div>
             </div>
+            <div class="card-wrapper hidden">
+                <div class="card tile-6">
+                    <div class="card-bg"></div>
+                    <div class="card-sheen"></div>
+                    <div class="card-border-details"></div>
+                    <div class="card-content">
+                        <div class="card-title">hostel affairs</div>
+                        <div class="card-desc">Aman Sen</div>
+                        <div class="card-desc">EMAIL ID:-aman230101026@iiitmanipur.ac.in</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-wrapper hidden">
+                <div class="card tile-7">
+                    <div class="card-bg"></div>
+                    <div class="card-sheen"></div>
+                    <div class="card-border-details"></div>
+                    <div class="card-content">
+                        <div class="card-title">sports secretary</div>
+                        <div class="card-desc">Muhammad Nehal</div>
+                        <div class="card-desc">EMAIL ID:-muha230101048@iiitmanipur.ac.in</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-wrapper hidden">
+                <div class="card tile-8">
+                    <div class="card-bg"></div>
+                    <div class="card-sheen"></div>
+                    <div class="card-border-details"></div>
+                    <div class="card-content">
+                        <div class="card-title">technical secretary</div>
+                        <div class="card-desc">Puneet Kumar</div>
+                        <div class="card-desc">EMAIL ID:-pune230101025@iiitmanipur.ac.in</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-wrapper hidden">
+                <div class="card tile-9">
+                    <div class="card-bg"></div>
+                    <div class="card-sheen"></div>
+                    <div class="card-border-details"></div>
+                    <div class="card-content">
+                        <div class="card-title">cultural secretary</div>
+                        <div class="card-desc">Suman Kumar</div>
+                        <div class="card-desc">EMAIL ID:-suma230102060@iiitmanipur.ac.in</div>
+                    </div>
+                </div>
+            </div>
+            
         </div>
         <button class="nav-btn right-btn" onclick="scrollGrid(1)">&#10095;</button>
 </div>
@@ -1336,24 +1388,72 @@ body::-webkit-scrollbar {
     }, 70);
 
     // --- MAIN GRID AUTO-SCROLL ---
+    function scrollGrid(direction) {
     const gridContainer = document.querySelector('.grid');
-    let autoScrollInterval;
+    if (!gridContainer) return;
 
-    function startAutoScroll() {
-        clearInterval(autoScrollInterval);
-        autoScrollInterval = setInterval(() => {
-            if (!gridContainer) return;
-            if (gridContainer.scrollLeft + gridContainer.clientWidth >= gridContainer.scrollWidth - 10) {
-                gridContainer.scrollTo({ left: 0, behavior: 'smooth' });
-            } else {
-                gridContainer.scrollBy({ left: gridContainer.clientWidth * 0.8, behavior: 'smooth' });
-            }
-        }, 4000);
+    // Move the grid by 80% of its visible width for each click
+    const scrollAmount = gridContainer.clientWidth * 0.8; 
+    
+    gridContainer.scrollBy({
+        left: direction * scrollAmount,
+        behavior: 'smooth'
+    });
+
+    // Reset the auto-scroll timer so it doesn't jump immediately after a manual click
+    if (typeof startAutoScroll === "function") {
+        startAutoScroll();
     }
+}
+   // --- MAIN GRID AUTO-SCROLL ---
+const gridContainer = document.querySelector('.grid');
+let autoScrollInterval;
+let resumeTimer; // Timer for restarting after interaction
 
+function startAutoScroll() {
+    stopAutoScroll(); // Clear existing to prevent duplicates
+    autoScrollInterval = setInterval(() => {
+        if (!gridContainer) return;
+        // Logic for infinite loop back to start
+        if (gridContainer.scrollLeft + gridContainer.clientWidth >= gridContainer.scrollWidth - 10) {
+            gridContainer.scrollTo({ left: 0, behavior: 'smooth' });
+        } else {
+            gridContainer.scrollBy({ left: gridContainer.clientWidth * 0.8, behavior: 'smooth' });
+        }
+    }, 4000); // 4 second interval
+}
+
+function stopAutoScroll() {
+    clearInterval(autoScrollInterval);
+    clearTimeout(resumeTimer);
+}
+
+// Function to handle the delay before restarting
+function requestResume() {
+    clearTimeout(resumeTimer);
+    // Wait 3 seconds after interaction ends before restarting auto-scroll
+    resumeTimer = setTimeout(startAutoScroll, 1500);
+}
+
+// --- EVENT LISTENERS FOR CARDS ---
+// We use the gridContainer to delegate events for all cards
+if (gridContainer) {
+    // 1. Hover Stop
+    gridContainer.addEventListener('mouseenter', stopAutoScroll);
+    
+    // 2. Resume when mouse leaves
+    gridContainer.addEventListener('mouseleave', requestResume);
+
+    // 3. Click/Touch Stop (already partly in your code, enhanced here)
+    gridContainer.addEventListener('touchstart', stopAutoScroll);
+    gridContainer.addEventListener('touchend', requestResume);
+}
+
+// Initial start
+startAutoScroll();
     gridContainer?.addEventListener('touchstart', () => clearInterval(autoScrollInterval), { passive: true });
     gridContainer?.addEventListener('touchend', startAutoScroll);
-    startAutoScroll();
+    
 </script>
 </body>
 </html>
