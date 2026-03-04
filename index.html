@@ -471,6 +471,7 @@ body::-webkit-scrollbar {
     perspective: 1200px;
     overflow: visible; /* Changed from hidden to prevent clipping 3D effects */
     margin-top: 40px;
+    touch-action: none;
 }
 .slider {
     position: relative;
@@ -478,7 +479,7 @@ body::-webkit-scrollbar {
     height: 260px;
     transform-style: preserve-3d;
     /* We keep the animation, but we will control the playState or transform via JS */
-    
+    animation: none !important;
     z-index: 2;
    transition: transform 0.8s ease-out; /* Smooths out the scroll rotation */
 }
@@ -1435,6 +1436,53 @@ gridContainer.addEventListener('touchend', () => startAutoScroll());
 
 // Initialize
 startAutoScroll();
+// Updated Website Team 3D Revolve Logic
+function initWebsiteSlider() {
+    const slider = document.querySelector('.slider');
+    const sliderContainer = document.querySelector('.slider-container');
+    
+    if (!slider || !sliderContainer) return;
+
+    let rotation = 0;
+    let startX = 0;
+    let isDragging = false;
+
+    // Desktop Scroll (Mouse Wheel)
+    sliderContainer.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        rotation += e.deltaY * 0.15;
+        slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
+    }, { passive: false });
+
+    // Mobile Touch Start
+    sliderContainer.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+        // Pause any CSS animations if you have them
+        slider.style.animation = 'none';
+    }, { passive: true });
+
+    // Mobile Touch Move
+    sliderContainer.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
+        
+        const currentX = e.touches[0].clientX;
+        const deltaX = startX - currentX;
+        
+        // Adjust sensitivity (0.6) for mobile feel
+        rotation += deltaX * 0.6; 
+        slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
+        
+        startX = currentX;
+    }, { passive: true });
+
+    sliderContainer.addEventListener('touchend', () => {
+        isDragging = false;
+    });
+}
+
+// Call this function immediately or when opening the overlay
+document.addEventListener('DOMContentLoaded', initWebsiteSlider);
     </script>
 </body>
 </html>
