@@ -1266,7 +1266,7 @@ body::-webkit-scrollbar {
 
             sliderContainer.addEventListener('touchmove', (e) => {
                 if (!isDragging) return;
-                rotation += (startX - e.touches[0].clientX) * 0.5;
+                rotation -= (startX - e.touches[0].clientX) * 0.5;
                 slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
                 startX = e.touches[0].clientX;
             }, { passive: true });
