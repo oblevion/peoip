@@ -158,7 +158,7 @@ body::-webkit-scrollbar {
     margin-bottom: 80px;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    touch-action: pan-x;
+
     /* Hide scrollbar for IE, Edge and Firefox */
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;     /* Firefox */
@@ -1286,7 +1286,7 @@ body::-webkit-scrollbar {
         clearTimeout(scrollTimeout);
         
         // Update the same variable used by the auto-rotator
-        currentRotation += e.deltaY / 5; 
+        currentRotation += e.deltaY / 3; 
         slider.style.transform = `perspective(1200px) rotateY(${currentRotation}deg)`;
 
         // Resume auto-rotation after 3 seconds of silence
@@ -1396,93 +1396,81 @@ function startAutoScroll() {
         }
     }, 4000); // 4 seconds per slide
 }
-// Logic for the Website Team 3D Revolve Effect
+// --- WEBSITE TEAM: MOBILE ROTATION & AUTO-RESUME ---
 const slider = document.querySelector('.slider');
 const sliderContainer = document.querySelector('.slider-container');
 
 if (slider && sliderContainer) {
     let rotation = 0;
     let startX = 0;
+    let isDragging = false;
+    let resumeTimer;
+    let autoRotateInterval;
 
-    // Handle Mobile Swipe to Rotate
+    // Start auto-rotation immediately
+    function startAutoRotation() {
+        clearInterval(autoRotateInterval);
+        autoRotateInterval = setInterval(() => {
+            rotation += 0.5; // Speed of auto-rotation
+            slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
+        }, 30);
+    }
+
+    // Stop all rotation and timers
+    function stopRotation() {
+        clearInterval(autoRotateInterval);
+        clearTimeout(resumeTimer);
+    }
+
+    // Desktop: Scroll wheel rotation
+    sliderContainer.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        stopRotation();
+        rotation += e.deltaY * 0.15;
+        slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
+        
+        // Resume after 3 seconds of no scrolling
+        resumeTimer = setTimeout(startAutoRotation, 3000);
+    }, { passive: false });
+
+    // Mobile: Touch start
     sliderContainer.addEventListener('touchstart', (e) => {
+        stopRotation();
         startX = e.touches[0].clientX;
+        isDragging = true;
+        slider.style.transition = 'none'; // Instant response while dragging
     }, { passive: true });
 
+    // Mobile: Touch move (Rotate)
     sliderContainer.addEventListener('touchmove', (e) => {
+        if (!isDragging) return;
         const currentX = e.touches[0].clientX;
         const deltaX = startX - currentX;
         
-        // Update rotation based on swipe distance
-        rotation += deltaX * 0.5; 
+        rotation += deltaX * 0.5; // Sensitivity
         slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
         
         startX = currentX;
     }, { passive: true });
 
-    // Desktop Scroll Wheel Support (Optional but recommended)
-    sliderContainer.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        rotation += e.deltaY * 0.2;
-        slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
-    }, { passive: false });
+    // Mobile: Touch end (Start resume timer)
+    sliderContainer.addEventListener('touchend', () => {
+        isDragging = false;
+        slider.style.transition = 'transform 0.8s ease-out'; // Restore smoothness
+        
+        // Resume auto-rotation after 3 seconds of inactivity
+        resumeTimer = setTimeout(startAutoRotation, 3000);
+    });
+
+    // Initialize the rotation
+    startAutoRotation();
 }
 // Stop auto-scroll when user touches the screen
-// This prevents the script from blocking the touch-scroll movement
-gridContainer.addEventListener('touchstart', () => {
-    clearInterval(autoScrollInterval);
-}, { passive: true });
+gridContainer.addEventListener('touchstart', () => clearInterval(autoScrollInterval));
 gridContainer.addEventListener('touchend', () => startAutoScroll());
 
 // Initialize
 startAutoScroll();
-// Updated Website Team 3D Revolve Logic
-function initWebsiteSlider() {
-    const slider = document.querySelector('.slider');
-    const sliderContainer = document.querySelector('.slider-container');
-    
-    if (!slider || !sliderContainer) return;
-
-    let rotation = 0;
-    let startX = 0;
-    let isDragging = false;
-
-    // Desktop Scroll (Mouse Wheel)
-    sliderContainer.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        rotation += e.deltaY * 0.15;
-        slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
-    }, { passive: false });
-
-    // Mobile Touch Start
-    sliderContainer.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-        // Pause any CSS animations if you have them
-        slider.style.animation = 'none';
-    }, { passive: true });
-
-    // Mobile Touch Move
-    sliderContainer.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        
-        const currentX = e.touches[0].clientX;
-        const deltaX = startX - currentX;
-        
-        // Adjust sensitivity (0.6) for mobile feel
-        rotation += deltaX * 0.6; 
-        slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
-        
-        startX = currentX;
-    }, { passive: true });
-
-    sliderContainer.addEventListener('touchend', () => {
-        isDragging = false;
-    });
-}
-
-// Call this function immediately or when opening the overlay
-document.addEventListener('DOMContentLoaded', initWebsiteSlider);
     </script>
 </body>
 </html>
