@@ -953,524 +953,407 @@ body::-webkit-scrollbar {
         <p>GRIFFITH DID EVERYTHING WRONG</p>
     </footer>
 
-    <script>
-        // Character data
-        const teamData = {
-            dac: {heading:{name:"design and creative team"},
-                leader: { name: "Rahul Sharma", contact: "rahu230103021@iiitmanipur.ac.in | +916396165371" ,photo:"photos/3021.webp"},
-                colead: [{ name: "Trishansh verma", role: "tris230101068@iiitmanipur.ac.in" ,photo:"photos/1068.webp"}
-                , { name: "Aryan Singhvishesh", role: "arya240102006@iiitmanipur.ac.in" ,photo:"photos/2006.webp" }
-                    , { name: "Yogita", role: "yogi230101091@iiitmanipur.ac.in",photo:"photos/1091.webp" }],
-                    members:[
-                     { name: "Sanjeev Singh", role: "sanj240101002@iiitmanipur.ac.in" }
-                    , { name: "Harshit kumar ", role: "hars240101005@iiitmanipur.ac.in" }
-                    , { name: "Anant Bhardwaj ", role: "anan240101007@iiitmanipur.ac.in" }
-                    , { name: "Sahil", role: "sahi240102015@iiitmanipur.ac.in" }
-                    , { name: "Harshit Mishra", role: " hars230101065@iiitmanipur.ac.in" }
-                    , { name: "Deepak Raj", role: " deep240102003@iiitmanipur.ac.in" }
-                    , { name: "Utkarsh Singh ", role: "utka240101014@iiitmanipur.ac.in" }
-                    , { name: "Saharsh", role: "saha240104014@iiitmanipur.ac.in" }
-                    , { name: "Ananya Anand", role: "ananya252030@iiitmanipur.ac.in" }
-                    , { name: "Anshika Sharma ", role: "anshika251046@iiitmanipur.ac.in" }
-                    , { name: "Kumari Sakshi", role: "kumari254049@iiitmanipur.ac.in" }
-                ]
-            },
-            pao:{heading:{name:"PR and outreach team"},
-        leader:{name:"Karthik",contact:"thir230101007@iiitmanipur.ac.in | +919392268820",photo:"photos/1007.webp"},
-        colead: [    { name: "Pratham Gupta ", role: "prat230103034@iiitmanipur.ac.in" ,photo:"photos/3034.webp"}
-            ,{ name: "Mansi Dubey ", role: "mans240101093@iiitmanipur.ac.in",photo:"photos/1093.webp" }
-                    , { name: "Alok Kumar ", role: "alok240101051@iiitmanipur.ac.in" ,photo:"photos/1051.webp"}
-                    , { name: "Lavish Sadhwani ", role: "lavi230102040@iiitmanipur.ac.in" ,photo:"photos/2040.webp"}
-                , { name: "Nikhil Raj ", role: "nikh240103026@iiitmanipur.ac.in" ,photo:"photos/3026.webp" }],
-                    members:[ { name: "SHIVAM KUMAR", role: "shiv230102021@iiitmanipur.ac.in" }
-                    , { name: "Shivu K C M", role: "shiv230101074@iiitmanipur.ac.in" }
-                    , { name: "Arnav Tripathi", role: "arna230101077@iiitmanipur.ac.in" }
-                    , { name: "Himanshu Raj", role: "hima230101084@iiitmanipur.ac.in" }
-                    , { name: "Jessu Raju", role: "bano230104022@iiitmanipur.ac.in" }
-                    , { name: "Sachin kumar", role: "sach230101092@iiitmanipur.ac.in" }
-                    , { name: "Swapnil Chate ", role: "swap230102012@iiitmanipur.ac.in" }
-                    , { name: "DIXANT SONI", role: "dixa230103029@iiitmanipur.ac.in" }
-                    
-                    , { name: "Anshul yadav", role: "ansh240102052@iiitmanipur.ac.in" }
-                    , { name: "Srushti", role: "shru240102074@iiitmanipur.ac.in" }
-                    , { name: "Nimisha Rai", role: "nimi240104009@iiitmanipur.ac.in" }
-                    , { name: "Charan", role: "katta240104023@iiitmanipur.ac.in" }
-                    , { name: "Dhanireddy Vijayalakshmi Sai ", role: "dhanireddy255030@iiitmanipur.ac.in" }
-                    , { name: "Apurva Chandulalsa Dhalkari ", role: "apurva253049@iiitmanipur.ac.in" }
-                    , { name: "shaloni Gupta ", role: "shaloni254020@iiitmanipur.ac.in" }
-                    , { name: "Abhinav jha", role: "abhinav254028@iiitmanipur.ac.in" }
-                    , { name: "Keshav Israni ", role: "kesh230101090@iiitmanipur.ac.in" }
-                    , { name: "Kushaljeet Singh Arora ", role: "kush230101035@iiitmanipur.ac.in" }
-                    ]},
-        
-            spons: {heading:{name:"sponsorship team"},
-                leader: { name: "Avvaru Naga Prabhas", contact: "avva230101015@iiitmanipur.ac.in | +919398238042",photo:"photos/1015.webp" },
-            colead:[ {name: "EESH SAXENA", role: "eesh230101032@iiitmanipur.ac.in",photo:"photos/1032.webp" }
-                    , { name: "Leimapokpam Shenita Devi ", role: "leim240102051@iiitmanipur.ac.in",photo:"photos/2051.webp" }],
-                    members:[ { name: "Deepak Raj ", role: "deep240102003@iiitmanipur.ac.in" }
-                    , { name: "Akanksha Maurya", role: "akan240102010@iiitmanipur.ac.in" }
-                    , { name: "Anamika Tirkey ", role: "anam240102037@iiitmanipur.ac.in" }
-                    , { name: "Rishu raj", role: "rish240102039@iiitmanipur.ac.in" }
-                    , { name: "Anjeet Kumar", role: "anje240102043@iiitmanipur.ac.in" }
-                    , { name: "Harshvardhan ", role: "hars240102044@iiitmanipur.ac.in" }
-                    , { name: "Love yadav ", role: "love240103038@iiitmanipur.ac.in" }
-                    , { name: "Kushagra Verma", role: "kush240104004@iiitmanipur.ac.in" }
-                    , { name: "Vivek Mishra ", role: "vive240104008@iiitmanipur.ac.in" }
-                    , { name: "Devraj jat ", role: "devraj253042@iiitmanipur.ac.in" }
-                    , { name: "Harsh Kumar", role: "harsh253094@iiitmanipur.ac.in" }
-                    , { name: "Yash vikas jagadale", role: "jagadale254058@iiitmanipur.ac.in" }]
-            },
-            tech:{heading:{name:"Technical team"},
-        leader:{name:"Shivam Kumar",contact:"shiv230102037@iiitmanipur.ac.in | +918826314381",photo:"photos/2037.webp" },
-        colead: [    { name: "Ujjwal Kumar ", role: "ujjw230104028@iiitmanipur.ac.in",photo:"photos/4028.webp"  }
-                    , { name: "Saloni Kumari ", role: "salo240101054@iiitmanipur.ac.in",photo:"photos/1054.webp"  }
-                    ],
-                    members:[
-                     { name: "Aman Chahar", role: "aman240103033@iiitmanipur.ac.in"  }
-                     ,{name:"Tanmay Jasu", role:" tanmay252053@iiitmanipur.ac.in"}
-                    ,{ name: "Retesh Mourya ", role: "rete230101020@iiitmanipur.ac.in" }
-                    , { name: "Aarav Sri Krishan", role: "aara240102071@iiitmanipur.ac.in" }
-                    , { name: "Kumar Gaurav ", role: "kuma240101101@iiitmanipur.ac.in " }
-                    , { name: "Anuj Rewar  ", role: "anuj240103017@iiitmanipur.ac.in " }
-                    , { name: "Saurabh sati ", role: " saur240103024@iiitmanipur.ac.in" }
-                    , { name: "Lakshit Khandal ", role: " laks240102067@iiitmanipur.ac.in" }
-                    , { name: "Saptaparno Chatterjee", role: "saptaparno256006@iiitmanipur.ac.in" }
-                    , { name: "Shaurya Gupta ", role: "shaurya253004@iiitmanipur.ac.in " }
-                    , { name: "Alok Singh", role: "alok251074@iiitmanipur.ac.in " }
-                    , { name: "Arihant Mishra ", role: " arihant251072@iiitmanipur.ac.in" }
-                    , { name: "RISHABH CHAUHAN", role: " rishabh251003@iiitmanipur.ac.in" }
-                    , { name: "ZAIRIK QURESHI ", role: " zairik253070@iiitmanipur.ac.in" }
-                    , { name: "Ashutosh Kumar Mehta", role: " ashutosh252052@iiitmanipur.ac.in" }
-                    , { name: "Sanket sunil singh", role: " sanket254016@iiitmanipur.ac.in" }
-                    , { name: "Bibaswan Sarkar ", role: " bibaswan256033@iiitmanipur.ac.in" }
-                    , { name: "Abhinav", role: " abhinav251036@iiitmanipur.ac.in " }
-                    , { name: "Dipali ", role: "dipali254048@iiitmanipur.ac.in " }
-                    , { name: "Shiwani Anand ", role: " shiwani254041@iiitmanipur.ac.in" }
-                    , { name: "Pranavi Pathak ", role: "pranavi252035@iiitmanipur.ac.in " }
-                    , { name: "Anuj Gupta ", role: "anuj230102064@iiitmanipur.ac.in " }
-                    , { name: "Lipranj Dharwal ", role: "lipr230104014@iiitmanipur.ac.in " }
-                    , { name: "Aditya Sharma ", role: " adit230102059@iiitmanipur.ac.in" }
-                    , { name: "Shree Venkat", role: "eluv230104024@iiitmanipur.ac.in " }
-                    , { name: "Aryan Asit", role: " arya230104007@iiitmanipur.ac.in" }
-                    , { name: "Krishna Anand ", role: "kris230101082@iiitmanipur.ac.in " }
-                    , { name: "Arjeet Singh ", role: " arje230101078@iiitmanipur.ac.in" }
-                    , { name: "Ankit Joshi ", role: "anki2301040009@iiitmanipur.ac.in" }
-                    , { name: "Siddhardhareddy duggu", role: " sidd230104006@iiitmanipur.ac.in" }
-                    , { name: "Aryan", role: " aryan251008@iiitmanipur.ac.in" }
-                    , { name: "Akshat Chaturvedi", role: " aksh240102059@iiitmanipur.ac.in" }
-                    ]},
-            cstm:{heading:{name:"Management team"},
-        leader:{name:"Aniket Raj",contact:"anik230103030@iiitmanipur.ac.in | +917900905797",photo:"photos/3030.webp"},
-        colead: [    { name: "Aishwary Raj", role: "aish230104023@iiitmanipur.ac.in",photo:"photos/4023.webp" }
-                    , { name: "Rinyin", role: "rinyin251087@iiitmanipur.ac.in",photo:"photos/1087.webp" }],
-                    members:[ { name: "Devesh Dixit ", role: "deve230101036@iiitmanipur.ac.in" }
-                    , { name: "Shobhit Mishra ", role: "shob230101046@iiitmanipur.ac.in" }
-                    , { name: "Lakshya Singh ", role: "laks230103012@iiitmanipur.ac.in" }
-                    , { name: "Swapnil Yadav", role: "swap230103015@iiitmanipur.ac.in" }
-                    , { name: "Arunendra Tripathi ", role: "arun230103016@iiitmanipur.ac.in" }
-                    , { name: "Priya singh", role: "priy240102001@iiitmanipur.ac.in" }
-                    , { name: "KUMAR ADITYA ", role: "kuma240102019@iiitmanipur.ac.in" }
-                    , { name: "Akib Aftab", role: "akib240103010@iiitmanipur.ac.in" }
-                    , { name: "Ashutosh Tripathi ", role: "ashutosh251017@iiitmanipur.ac.in" }
-                    , { name: "SONU KUMAR CHAUDHARY", role: "sonu251039@iiitmanipur.ac.in" }
-                    , { name: "Nomee Singh ", role: "nomee251067@iiitmanipur.ac.in" }
-                    , { name: "Soumya Singh ", role: "soumya251079@iiitmanipur.ac.in" }
-                    , { name: "Muskan ", role: "muskan251088@iiitmanipur.ac.in" }
-                    , { name: "ARYAN GOSWAMI ", role: "aryan252018@iiitmanipur.ac.in" }
-                    , { name: "Divyanshu kumar", role: "divyanshu252044@iiitmanipur.ac.in" }
-                    , { name: "Prince Kumar ", role: "prince252045@iiitmanipur.ac.in" }
-                    , { name: "Kriti Raj ", role: "kriti252046@iiitmanipur.ac.in" }
-                    , { name: "Rohit khokhar ", role: "rohit253036@iiitmanipur.ac.in" }
-                    , { name: "ROUNAK KUMAR", role: "rounak254018@iiitmanipur.ac.in" }
-                    , { name: "Aman Singh ", role: "aman254045@iiitmanipur.ac.in" }
-                    , { name: "Dipali ", role: "dipali254048@iiitmanipur.ac.in" }
-                    ]},
-            cege: {heading:{name:"Cultural events and Guest reception team"},
-                leader: { name: "Harshit Mishra", contact: "hars230101065@iiitmanipur.ac.in | +919628492644",photo:"photos/1065.webp" },
-            colead:[ {name: "Aditi Singh ", role: "adit230101066@iiitmanipur.ac.in",photo:"photos/1066.webp" }
-                   ],
-                    members:[{ name: "Alok Singh ", role: "alok251074@iiitmanipur.ac.in" }
-                    , { name: "Jhansi Rani Majhi  ", role: "jhansi255029@iiitmanipur.ac.in" }
-                    , { name: "RISHU RAJ", role: "rish240102028@iiitmanipur.ac.in" }
-                    , { name: "Keshav Israni ", role: "kesh230101090@iiitmanipur.ac.in" }
-                    , { name: "Ashok Godara", role: "asho240102009@iiitmanipur.ac.in" }
-                    , { name: "Rachit Srivastava ", role: "rach230101085@iiitmanipur.ac.in" }
-                    , { name: "SINTU RAY ", role: "Sint240104015@iiitmanipur.ac.in" }               
-                    , { name: "Piyush prasad", role: "piyu30102065@iiitmanipur.ac.in" }
-                    , { name: "Smruti Sudha Sahu ", role: "smruti252037@iiitmanipur.ac.in" }
-                    , { name: "Arunima Das", role: "arun230101011@iiitmanipur.ac.in" }
-                    , { name: "Devika ", role: "devi230101083@iiitmanipur.ac.in" }
-                    , { name: "Aishwarya Sharma ", role: "aish240101088@iiitmanipur.ac.in" }
-                    , { name: "Aarav Joshi ", role: "aarav253039@iiitmanipur.ac.in" }
-                    , { name: "Siddhi Singh Rajput ", role: "siddhi254030@iiitmanipur.ac.in" }
-                    , { name: "Utkarsh Jha", role: "utkarsh251084@iiitmanipur.ac.in" }
-                    , { name: "Saksham Gupta ", role: "saksham251081@iiitmanipur.ac.in" }
-                ]},
-                   
-            soeh: {heading:{name:"Stall organizing, Event handling Team"},
-                leader: { name: "Sandeep Kumar Saini ", contact: "sand230101029@iiitmanipur.ac.in | +917850832958" ,photo:"photos/1029.webp"},
-            colead:[ {name: "Nancy", role: "nanc240101052@iiitmanipur.ac.in",photo:"photos/1052.webp" }
-                    , { name: "Rishi Babu ", role: "rishi253084@iiitmanipur.ac.in",photo:"photos/3084.webp" }],
-                    members:[{ name: "Abhay", role: "abhay252014@iiitmanipur.ac.in" }
-                    , { name: "Nabajit Das ", role: "nabajit253027@iiitmanipur.ac.in" }
-                    , { name: "Ujjwal Tiwari", role: "ujjwal253071@iiitmanipur.ac.in" }
-                    , { name: "Shaurya Singh ", role: "shaurya253074@iiitmanipur.ac.in" }
-                    , { name: "Piyush yadav ", role: "piyush253078@iiitmanipur.ac.in" }
-                    , { name: "Ankit Yadav", role: "ankit254053@iiitmanipur.ac.in" }
-                    ]},
-            website: {heading:{name:"Website Team"},
-                     members:[ 
-                          { name: "Aryan Singhvishesh", role: "arya240102006@iiitmanipur.ac.in" }
-                         ,{ name: "Sanjeev Singh", role: "sanj240101002@iiitmanipur.ac.in" }
-                         ,{ name: "Harshit kumar ", role: "hars240101005@iiitmanipur.ac.in" }
-                         , { name: "Sahil", role: "sahi240102015@iiitmanipur.ac.in" }
-                         ,{ name: "Anant Bhardwaj ", role: "anan240101007@iiitmanipur.ac.in" }
-                    ]},
-        };
+   <script>
+    // --- CHARACTER DATA ---
+    const teamData = {
+        dac: {
+            heading: { name: "design and creative team" },
+            leader: { name: "Rahul Sharma", contact: "rahu230103021@iiitmanipur.ac.in | +916396165371", photo: "photos/3021.webp" },
+            colead: [
+                { name: "Trishansh verma", role: "tris230101068@iiitmanipur.ac.in", photo: "photos/1068.webp" },
+                { name: "Aryan Singhvishesh", role: "arya240102006@iiitmanipur.ac.in", photo: "photos/2006.webp" },
+                { name: "Yogita", role: "yogi230101091@iiitmanipur.ac.in", photo: "photos/1091.webp" }
+            ],
+            members: [
+                { name: "Sanjeev Singh", role: "sanj240101002@iiitmanipur.ac.in" },
+                { name: "Harshit kumar ", role: "hars240101005@iiitmanipur.ac.in" },
+                { name: "Anant Bhardwaj ", role: "anan240101007@iiitmanipur.ac.in" },
+                { name: "Sahil", role: "sahi240102015@iiitmanipur.ac.in" },
+                { name: "Harshit Mishra", role: " hars230101065@iiitmanipur.ac.in" },
+                { name: "Deepak Raj", role: " deep240102003@iiitmanipur.ac.in" },
+                { name: "Utkarsh Singh ", role: "utka240101014@iiitmanipur.ac.in" },
+                { name: "Saharsh", role: "saha240104014@iiitmanipur.ac.in" },
+                { name: "Ananya Anand", role: "ananya252030@iiitmanipur.ac.in" },
+                { name: "Anshika Sharma ", role: "anshika251046@iiitmanipur.ac.in" },
+                { name: "Kumari Sakshi", role: "kumari254049@iiitmanipur.ac.in" }
+            ]
+        },
+        pao: {
+            heading: { name: "PR and outreach team" },
+            leader: { name: "Karthik", contact: "thir230101007@iiitmanipur.ac.in | +919392268820", photo: "photos/1007.webp" },
+            colead: [
+                { name: "Pratham Gupta ", role: "prat230103034@iiitmanipur.ac.in", photo: "photos/3034.webp" },
+                { name: "Mansi Dubey ", role: "mans240101093@iiitmanipur.ac.in", photo: "photos/1093.webp" },
+                { name: "Alok Kumar ", role: "alok240101051@iiitmanipur.ac.in", photo: "photos/1051.webp" },
+                { name: "Lavish Sadhwani ", role: "lavi230102040@iiitmanipur.ac.in", photo: "photos/2040.webp" },
+                { name: "Nikhil Raj ", role: "nikh240103026@iiitmanipur.ac.in", photo: "photos/3026.webp" }
+            ],
+            members: [
+                { name: "SHIVAM KUMAR", role: "shiv230102021@iiitmanipur.ac.in" },
+                { name: "Shivu K C M", role: "shiv230101074@iiitmanipur.ac.in" },
+                { name: "Arnav Tripathi", role: "arna230101077@iiitmanipur.ac.in" },
+                { name: "Himanshu Raj", role: "hima230101084@iiitmanipur.ac.in" },
+                { name: "Jessu Raju", role: "bano230104022@iiitmanipur.ac.in" },
+                { name: "Sachin kumar", role: "sach230101092@iiitmanipur.ac.in" },
+                { name: "Swapnil Chate ", role: "swap230102012@iiitmanipur.ac.in" },
+                { name: "DIXANT SONI", role: "dixa230103029@iiitmanipur.ac.in" },
+                { name: "Anshul yadav", role: "ansh240102052@iiitmanipur.ac.in" },
+                { name: "Srushti", role: "shru240102074@iiitmanipur.ac.in" },
+                { name: "Nimisha Rai", role: "nimi240104009@iiitmanipur.ac.in" },
+                { name: "Charan", role: "katta240104023@iiitmanipur.ac.in" },
+                { name: "Dhanireddy Vijayalakshmi Sai ", role: "dhanireddy255030@iiitmanipur.ac.in" },
+                { name: "Apurva Chandulalsa Dhalkari ", role: "apurva253049@iiitmanipur.ac.in" },
+                { name: "shaloni Gupta ", role: "shaloni254020@iiitmanipur.ac.in" },
+                { name: "Abhinav jha", role: "abhinav254028@iiitmanipur.ac.in" },
+                { name: "Keshav Israni ", role: "kesh230101090@iiitmanipur.ac.in" },
+                { name: "Kushaljeet Singh Arora ", role: "kush230101035@iiitmanipur.ac.in" }
+            ]
+        },
+        spons: {
+            heading: { name: "sponsorship team" },
+            leader: { name: "Avvaru Naga Prabhas", contact: "avva230101015@iiitmanipur.ac.in | +919398238042", photo: "photos/1015.webp" },
+            colead: [
+                { name: "EESH SAXENA", role: "eesh230101032@iiitmanipur.ac.in", photo: "photos/1032.webp" },
+                { name: "Leimapokpam Shenita Devi ", role: "leim240102051@iiitmanipur.ac.in", photo: "photos/2051.webp" }
+            ],
+            members: [
+                { name: "Deepak Raj ", role: "deep240102003@iiitmanipur.ac.in" },
+                { name: "Akanksha Maurya", role: "akan240102010@iiitmanipur.ac.in" },
+                { name: "Anamika Tirkey ", role: "anam240102037@iiitmanipur.ac.in" },
+                { name: "Rishu raj", role: "rish240102039@iiitmanipur.ac.in" },
+                { name: "Anjeet Kumar", role: "anje240102043@iiitmanipur.ac.in" },
+                { name: "Harshvardhan ", role: "hars240102044@iiitmanipur.ac.in" },
+                { name: "Love yadav ", role: "love240103038@iiitmanipur.ac.in" },
+                { name: "Kushagra Verma", role: "kush240104004@iiitmanipur.ac.in" },
+                { name: "Vivek Mishra ", role: "vive240104008@iiitmanipur.ac.in" },
+                { name: "Devraj jat ", role: "devraj253042@iiitmanipur.ac.in" },
+                { name: "Harsh Kumar", role: "harsh253094@iiitmanipur.ac.in" },
+                { name: "Yash vikas jagadale", role: "jagadale254058@iiitmanipur.ac.in" }
+            ]
+        },
+        tech: {
+            heading: { name: "Technical team" },
+            leader: { name: "Shivam Kumar", contact: "shiv230102037@iiitmanipur.ac.in | +918826314381", photo: "photos/2037.webp" },
+            colead: [
+                { name: "Ujjwal Kumar ", role: "ujjw230104028@iiitmanipur.ac.in", photo: "photos/4028.webp" },
+                { name: "Saloni Kumari ", role: "salo240101054@iiitmanipur.ac.in", photo: "photos/1054.webp" }
+            ],
+            members: [
+                { name: "Aman Chahar", role: "aman240103033@iiitmanipur.ac.in" },
+                { name: "Tanmay Jasu", role: " tanmay252053@iiitmanipur.ac.in" },
+                { name: "Retesh Mourya ", role: "rete230101020@iiitmanipur.ac.in" },
+                { name: "Aarav Sri Krishan", role: "aara240102071@iiitmanipur.ac.in" },
+                { name: "Kumar Gaurav ", role: "kuma240101101@iiitmanipur.ac.in " },
+                { name: "Anuj Rewar  ", role: "anuj240103017@iiitmanipur.ac.in " },
+                { name: "Saurabh sati ", role: " saur240103024@iiitmanipur.ac.in" },
+                { name: "Lakshit Khandal ", role: " laks240102067@iiitmanipur.ac.in" },
+                { name: "Saptaparno Chatterjee", role: "saptaparno256006@iiitmanipur.ac.in" },
+                { name: "Shaurya Gupta ", role: "shaurya253004@iiitmanipur.ac.in " },
+                { name: "Alok Singh", role: "alok251074@iiitmanipur.ac.in " },
+                { name: "Arihant Mishra ", role: " arihant251072@iiitmanipur.ac.in" },
+                { name: "RISHABH CHAUHAN", role: " rishabh251003@iiitmanipur.ac.in" },
+                { name: "ZAIRIK QURESHI ", role: " zairik253070@iiitmanipur.ac.in" },
+                { name: "Ashutosh Kumar Mehta", role: " ashutosh252052@iiitmanipur.ac.in" },
+                { name: "Sanket sunil singh", role: " sanket254016@iiitmanipur.ac.in" },
+                { name: "Bibaswan Sarkar ", role: " bibaswan256033@iiitmanipur.ac.in" },
+                { name: "Abhinav", role: " abhinav251036@iiitmanipur.ac.in " },
+                { name: "Dipali ", role: "dipali254048@iiitmanipur.ac.in " },
+                { name: "Shiwani Anand ", role: " shiwani254041@iiitmanipur.ac.in" },
+                { name: "Pranavi Pathak ", role: "pranavi252035@iiitmanipur.ac.in " },
+                { name: "Anuj Gupta ", role: "anuj230102064@iiitmanipur.ac.in " },
+                { name: "Lipranj Dharwal ", role: "lipr230104014@iiitmanipur.ac.in " },
+                { name: "Aditya Sharma ", role: " adit230102059@iiitmanipur.ac.in" },
+                { name: "Shree Venkat", role: "eluv230104024@iiitmanipur.ac.in " },
+                { name: "Aryan Asit", role: " arya230104007@iiitmanipur.ac.in" },
+                { name: "Krishna Anand ", role: "kris230101082@iiitmanipur.ac.in " },
+                { name: "Arjeet Singh ", role: " arje230101078@iiitmanipur.ac.in" },
+                { name: "Ankit Joshi ", role: "anki2301040009@iiitmanipur.ac.in" },
+                { name: "Siddhardhareddy duggu", role: " sidd230104006@iiitmanipur.ac.in" },
+                { name: "Aryan", role: " aryan251008@iiitmanipur.ac.in" },
+                { name: "Akshat Chaturvedi", role: " aksh240102059@iiitmanipur.ac.in" }
+            ]
+        },
+        cstm: {
+            heading: { name: "Management team" },
+            leader: { name: "Aniket Raj", contact: "anik230103030@iiitmanipur.ac.in | +917900905797", photo: "photos/3030.webp" },
+            colead: [
+                { name: "Aishwary Raj", role: "aish230104023@iiitmanipur.ac.in", photo: "photos/4023.webp" },
+                { name: "Rinyin", role: "rinyin251087@iiitmanipur.ac.in", photo: "photos/1087.webp" }
+            ],
+            members: [
+                { name: "Devesh Dixit ", role: "deve230101036@iiitmanipur.ac.in" },
+                { name: "Shobhit Mishra ", role: "shob230101046@iiitmanipur.ac.in" },
+                { name: "Lakshya Singh ", role: "laks230103012@iiitmanipur.ac.in" },
+                { name: "Swapnil Yadav", role: "swap230103015@iiitmanipur.ac.in" },
+                { name: "Arunendra Tripathi ", role: "arun230103016@iiitmanipur.ac.in" },
+                { name: "Priya singh", role: "priy240102001@iiitmanipur.ac.in" },
+                { name: "KUMAR ADITYA ", role: "kuma240102019@iiitmanipur.ac.in" },
+                { name: "Akib Aftab", role: "akib240103010@iiitmanipur.ac.in" },
+                { name: "Ashutosh Tripathi ", role: "ashutosh251017@iiitmanipur.ac.in" },
+                { name: "SONU KUMAR CHAUDHARY", role: "sonu251039@iiitmanipur.ac.in" },
+                { name: "Nomee Singh ", role: "nomee251067@iiitmanipur.ac.in" },
+                { name: "Soumya Singh ", role: "soumya251079@iiitmanipur.ac.in" },
+                { name: "Muskan ", role: "muskan251088@iiitmanipur.ac.in" },
+                { name: "ARYAN GOSWAMI ", role: "aryan252018@iiitmanipur.ac.in" },
+                { name: "Divyanshu kumar", role: "divyanshu252044@iiitmanipur.ac.in" },
+                { name: "Prince Kumar ", role: "prince252045@iiitmanipur.ac.in" },
+                { name: "Kriti Raj ", role: "kriti252046@iiitmanipur.ac.in" },
+                { name: "Rohit khokhar ", role: "rohit253036@iiitmanipur.ac.in" },
+                { name: "ROUNAK KUMAR", role: "rounak254018@iiitmanipur.ac.in" },
+                { name: "Aman Singh ", role: "aman254045@iiitmanipur.ac.in" },
+                { name: "Dipali ", role: "dipali254048@iiitmanipur.ac.in" }
+            ]
+        },
+        cege: {
+            heading: { name: "Cultural events and Guest reception team" },
+            leader: { name: "Harshit Mishra", contact: "hars230101065@iiitmanipur.ac.in | +919628492644", photo: "photos/1065.webp" },
+            colead: [{ name: "Aditi Singh ", role: "adit230101066@iiitmanipur.ac.in", photo: "photos/1066.webp" }],
+            members: [
+                { name: "Alok Singh ", role: "alok251074@iiitmanipur.ac.in" },
+                { name: "Jhansi Rani Majhi  ", role: "jhansi255029@iiitmanipur.ac.in" },
+                { name: "RISHU RAJ", role: "rish240102028@iiitmanipur.ac.in" },
+                { name: "Keshav Israni ", role: "kesh230101090@iiitmanipur.ac.in" },
+                { name: "Ashok Godara", role: "asho240102009@iiitmanipur.ac.in" },
+                { name: "Rachit Srivastava ", role: "rach230101085@iiitmanipur.ac.in" },
+                { name: "SINTU RAY ", role: "Sint240104015@iiitmanipur.ac.in" },
+                { name: "Piyush prasad", role: "piyu30102065@iiitmanipur.ac.in" },
+                { name: "Smruti Sudha Sahu ", role: "smruti252037@iiitmanipur.ac.in" },
+                { name: "Arunima Das", role: "arun230101011@iiitmanipur.ac.in" },
+                { name: "Devika ", role: "devi230101083@iiitmanipur.ac.in" },
+                { name: "Aishwarya Sharma ", role: "aish240101088@iiitmanipur.ac.in" },
+                { name: "Aarav Joshi ", role: "aarav253039@iiitmanipur.ac.in" },
+                { name: "Siddhi Singh Rajput ", role: "siddhi254030@iiitmanipur.ac.in" },
+                { name: "Utkarsh Jha", role: "utkarsh251084@iiitmanipur.ac.in" },
+                { name: "Saksham Gupta ", role: "saksham251081@iiitmanipur.ac.in" }
+            ]
+        },
+        soeh: {
+            heading: { name: "Stall organizing, Event handling Team" },
+            leader: { name: "Sandeep Kumar Saini ", contact: "sand230101029@iiitmanipur.ac.in | +917850832958", photo: "photos/1029.webp" },
+            colead: [
+                { name: "Nancy", role: "nanc240101052@iiitmanipur.ac.in", photo: "photos/1052.webp" },
+                { name: "Rishi Babu ", role: "rishi253084@iiitmanipur.ac.in", photo: "photos/3084.webp" }
+            ],
+            members: [
+                { name: "Abhay", role: "abhay252014@iiitmanipur.ac.in" },
+                { name: "Nabajit Das ", role: "nabajit253027@iiitmanipur.ac.in" },
+                { name: "Ujjwal Tiwari", role: "ujjwal253071@iiitmanipur.ac.in" },
+                { name: "Shaurya Singh ", role: "shaurya253074@iiitmanipur.ac.in" },
+                { name: "Piyush yadav ", role: "piyush253078@iiitmanipur.ac.in" },
+                { name: "Ankit Yadav", role: "ankit254053@iiitmanipur.ac.in" }
+            ]
+        },
+        website: {
+            heading: { name: "Website Team" },
+            members: [
+                { name: "Aryan Singhvishesh", role: "arya240102006@iiitmanipur.ac.in" },
+                { name: "Sanjeev Singh", role: "sanj240101002@iiitmanipur.ac.in" },
+                { name: "Harshit kumar ", role: "hars240101005@iiitmanipur.ac.in" },
+                { name: "Sahil", role: "sahi240102015@iiitmanipur.ac.in" },
+                { name: "Anant Bhardwaj ", role: "anan240101007@iiitmanipur.ac.in" }
+            ]
+        },
+    };
 
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
-        }, { threshold: 0.1 });
+    // --- INTERSECTION OBSERVERS ---
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('show'); });
+    }, { threshold: 0.1 });
 
-        document.querySelectorAll('.card-wrapper, .team-section-wrapper, footer').forEach((el) => observer.observe(el));
-        const mobileCardObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                // If the screen is mobile-sized
-                if (window.innerWidth <= 768) {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('in-view'); // Show details
-                    } else {
-                        entry.target.classList.remove('in-view'); // Hide details when scrolled past
-                    }
-                }
-            });
-        }, { 
-            // -30% top and -30% bottom means the "active zone" is the middle 40% of the screen
-            rootMargin: '-30% 0px -30% 0px', 
-            threshold: 0 
-        });
+    document.querySelectorAll('.card-wrapper, .team-section-wrapper, footer').forEach((el) => observer.observe(el));
 
-        document.querySelectorAll('.card').forEach(card => mobileCardObserver.observe(card));
-
-        // 3D Tilt Effect & Auto-Face Front Logic
-        document.querySelectorAll('.card').forEach(card => {
-            let snapTimeout;
-
-            card.addEventListener('mouseenter', () => {
-                clearTimeout(snapTimeout);
-                card.dataset.snapping = 'true';
-                
-                const computedStyle = window.getComputedStyle(card);
-                const currentTransform = computedStyle.transform;
-                
-                card.style.transform = currentTransform;
-                card.style.animation = 'none';
-                
-                void card.offsetWidth;
-                
-                card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s';
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.05, 1.05, 1.05)`;
-                
-                snapTimeout = setTimeout(() => {
-                    card.dataset.snapping = 'false';
-                }, 400);
-            });
-
-            card.addEventListener('mousemove', (e) => {
-                if (card.dataset.snapping === 'true') return; 
-
-                const rect = card.getBoundingClientRect();
-                const rotateX = ((e.clientY - rect.top - rect.height/2) / (rect.height/2)) * -12; 
-                const rotateY = ((e.clientX - rect.left - rect.width/2) / (rect.width/2)) * 12;
-                
-                card.style.transition = 'transform 0.1s ease-out';
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
-            });
-
-            card.addEventListener('mouseleave', () => {
-                clearTimeout(snapTimeout);
-                card.dataset.snapping = 'false';
-                
-                card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1), box-shadow 0.3s ease, border-color 0.3s'; 
-                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)'; 
-                
-                setTimeout(() => {
-                    if (!card.matches(':hover')) {
-                        card.style.transform = '';
-                        card.style.animation = ''; 
-                    }
-                }, 600);
-            });
-        });
-
-        const overlay = document.getElementById('teamOverlay');
-        const membersGrid = document.getElementById('membersGrid');
-        const overlayTitle = document.getElementById('overlayTitle');
-        
-        function openTeamOverlay(category) {
-            const grid = document.getElementById('membersGrid');
-            const title = document.getElementById('overlayTitle');
-            grid.innerHTML = '';
-            const data = teamData[category];
-            title.textContent = data.heading.name.toUpperCase();
-
-            if (!data) return;
-            membersGrid.style.display="grid";
-           if (category === 'website') {
-                membersGrid.style.display="block"; 
-                
-                const sliderContainer = document.createElement('div');
-                sliderContainer.className = 'slider-container';
-                if (window.innerWidth < 768) {
-        sliderContainer.style.setProperty('--slider-radius', '150px');
-    }
-                // --- NEW: Add the 3D Model to the center ---
-               // --- NEW: Add the 3D Model to the center ---
-                const centerModel = document.createElement('div');
-                centerModel.className = 'center-model';
-                centerModel.innerHTML = `
-                    <model-viewer 
-                        src="photos/model/guts1.glb" 
-                        alt="3D center model" 
-                        autoplay
-                        animation-name="*"
-                        disable-zoom
-                        interaction-prompt="none"
-                        camera-orbit="-10deg 90deg 105%"
-                        camera-controls>
-                    </model-viewer>
-                `;
-                sliderContainer.appendChild(centerModel);
-                // -------------------------------------------
-
-                const slider = document.createElement('div');
-                slider.className = 'slider';
-                slider.style.setProperty('--quantity', data.members.length);
-                
-                const bgImages = ['photos/guts.webp', 'photos/griffith.webp', 'photos/casca.webp', 'photos/skull.webp', 'photos/zodd.webp'];
-
-                data.members.forEach((m, index) => {
-                    const item = document.createElement('div');
-                    item.className = 'item';
-                    item.style.setProperty('--position', index + 1);
-                    
-                    const bgImg = bgImages[index % bgImages.length];
-                    item.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.95) 5%, rgba(0,0,0,0.4) 50%, transparent 100%), url('${bgImg}')`;
-
-                    item.innerHTML = `
-                        <span class="slider-member-name">${m.name}</span>
-                    
-                    `;
-                    slider.appendChild(item);
-                });
-                let currentRotation = 0;
-    let isAutoRotating = true;
-    let scrollTimeout;
-
-    // --- THE FIX: JavaScript Animation Loop ---
-    function rotateSlider() {
-        if (isAutoRotating) {
-            currentRotation -= 0.2; // Adjust for auto-spin speed
-            slider.style.transform = `perspective(1200px) rotateY(${currentRotation}deg)`;
-        }
-        // Only keep animating if the overlay is still open
-        if (overlay.classList.contains('active')) {
-            requestAnimationFrame(rotateSlider);
-        }
-    }
-
-    // --- THE FIX: Scroll Interaction ---
-    sliderContainer.addEventListener('wheel', (e) => {
-        e.preventDefault(); 
-        isAutoRotating = false; // Pause auto-rotation
-        clearTimeout(scrollTimeout);
-        
-        // Update the same variable used by the auto-rotator
-        currentRotation += e.deltaY / 3; 
-        slider.style.transform = `perspective(1200px) rotateY(${currentRotation}deg)`;
-
-        // Resume auto-rotation after 3 seconds of silence
-        scrollTimeout = setTimeout(() => {
-            isAutoRotating = true;
-        }, 3000);
-    }, { passive: false });
-
-    // Start the loop
-    requestAnimationFrame(rotateSlider);
-                sliderContainer.appendChild(slider);
-                grid.appendChild(sliderContainer);
-                
-            } else {
-                const banner = document.createElement('div');
-                banner.className = 'leader-banner';
-                banner.innerHTML = `
-                <img src="${data.leader.photo || 'default-avatar.jpg'}" class="leader-photo" alt="${data.leader.name}">
-                   <div class="leader-text-document"> <h3>LEADER: ${data.leader.name}</h3>
-                    <div class="leader-contact">CONTACT: ${data.leader.contact}</div>
-                    </div>
-                `;
-                grid.appendChild(banner);
-                data.colead.forEach(k=> {
-                    const banner = document.createElement('div');
-                    banner.className = 'leader-banner';
-                banner.innerHTML = `
-                <img src="${k.photo || 'default-avatar.jpg'}" class="leader-photo" alt="${k.name}">
-                        <div class="leader-text-content">
-                    <h4>CO-LEAD: ${k.name}</h4>
-                    <div class="leader-contact">CONTACT: ${k.role}</div>
-                        </div>
-                    `;
-                    grid.appendChild(banner);
-                });
-
-                data.members.forEach(m => {
-                    const div = document.createElement('div');
-                    div.className = 'member-row';
-                    div.innerHTML = `
-                        <div class="member-info">
-                            <span class="member-name">${m.name}</span><br>
-                            <span class="member-role">${m.role}</span>
-                        </div>
-                    `;
-                    grid.appendChild(div);
-                });
+    const mobileCardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (window.innerWidth <= 768) {
+                if (entry.isIntersecting) entry.target.classList.add('in-view');
+                else entry.target.classList.remove('in-view');
             }
+        });
+    }, { rootMargin: '-30% 0px -30% 0px', threshold: 0 });
 
-            document.getElementById('teamOverlay').classList.add('active');
-            document.body.classList.add('no-scroll');
-        }
-        
-        function closeTeamOverlay() { overlay.classList.remove('active'); document.body.classList.remove('no-scroll'); }
-        overlay.addEventListener('click', (e) => { if (e.target === overlay) closeTeamOverlay(); });
+    document.querySelectorAll('.card').forEach(card => mobileCardObserver.observe(card));
 
-        // Ash particle animation
-       const bloodContainer = document.getElementById('bloodContainer');
+    // --- 3D TILT EFFECT ---
+    document.querySelectorAll('.card').forEach(card => {
+        let snapTimeout;
+        card.addEventListener('mouseenter', () => {
+            clearTimeout(snapTimeout);
+            card.dataset.snapping = 'true';
+            card.style.animation = 'none';
+            card.style.transition = 'transform 0.4s cubic-bezier(0.23, 1, 0.32, 1)';
+            card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1.05, 1.05, 1.05)`;
+            snapTimeout = setTimeout(() => card.dataset.snapping = 'false', 400);
+        });
 
-function createBloodDrop() {
-    const drop = document.createElement('div');
-    drop.className = 'blood-drop';
-    
-    // Randomize droplet thickness (thin) and length (long)
-    const width = Math.random() * 2 + 1 + 'px'; 
-    const height = Math.random() * 15 + 10 + 'px'; 
-    
-    drop.style.width = width; 
-    drop.style.height = height;
-    drop.style.left = Math.random() * 100 + 'vw';
-    
-    // Randomize falling speed (faster than the old floating ash)
-    drop.style.animation = `rainBlood ${Math.random() * 2 + 1.5}s linear forwards`;
-    
-    bloodContainer.appendChild(drop);
-    
-    // Remove the drop from the DOM after it falls off screen
-    setTimeout(() => drop.remove(), 4000); 
-}
+        card.addEventListener('mousemove', (e) => {
+            if (card.dataset.snapping === 'true') return;
+            const rect = card.getBoundingClientRect();
+            const rotateX = ((e.clientY - rect.top - rect.height / 2) / (rect.height / 2)) * -12;
+            const rotateY = ((e.clientX - rect.left - rect.width / 2) / (rect.width / 2)) * 12;
+            card.style.transition = 'transform 0.1s ease-out';
+            card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.05, 1.05, 1.05)`;
+        });
 
-// Spawn droplets frequently for a "raining" feel (every 70 milliseconds)
-setInterval(createBloodDrop, 70);
-const gridContainer = document.querySelector('.grid');
-let autoScrollInterval;
-
-// Function to move the scroll
-function scrollGrid(direction) {
-    const scrollAmount = gridContainer.clientWidth * 0.8; // Move 80% of screen width
-    gridContainer.scrollBy({
-        left: direction * scrollAmount,
-        behavior: 'smooth'
+        card.addEventListener('mouseleave', () => {
+            card.style.transition = 'transform 0.6s cubic-bezier(0.23, 1, 0.32, 1)';
+            card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg)';
+        });
     });
-    
-    // Reset timer when user manually interacts
-    startAutoScroll();
-}
 
-// Automatic Slide Logic
-function startAutoScroll() {
-    clearInterval(autoScrollInterval);
-    autoScrollInterval = setInterval(() => {
-        // If we reach the end, go back to the start
-        if (gridContainer.scrollLeft + gridContainer.clientWidth >= gridContainer.scrollWidth - 10) {
-            gridContainer.scrollTo({ left: 0, behavior: 'smooth' });
+    // --- OVERLAY LOGIC ---
+    const overlay = document.getElementById('teamOverlay');
+    const membersGrid = document.getElementById('membersGrid');
+
+    function openTeamOverlay(category) {
+        const data = teamData[category];
+        if (!data) return;
+
+        const title = document.getElementById('overlayTitle');
+        membersGrid.innerHTML = '';
+        title.textContent = data.heading.name.toUpperCase();
+        membersGrid.style.display = (category === 'website') ? "block" : "grid";
+
+        if (category === 'website') {
+            const sliderContainer = document.createElement('div');
+            sliderContainer.className = 'slider-container';
+            if (window.innerWidth < 768) sliderContainer.style.setProperty('--slider-radius', '150px');
+
+            const centerModel = document.createElement('div');
+            centerModel.className = 'center-model';
+            centerModel.innerHTML = `<model-viewer src="photos/model/guts1.glb" autoplay animation-name="*" disable-zoom interaction-prompt="none" camera-orbit="-10deg 90deg 105%" camera-controls></model-viewer>`;
+            sliderContainer.appendChild(centerModel);
+
+            const slider = document.createElement('div');
+            slider.className = 'slider';
+            slider.style.setProperty('--quantity', data.members.length);
+
+            const bgImages = ['photos/guts.webp', 'photos/griffith.webp', 'photos/casca.webp', 'photos/skull.webp', 'photos/zodd.webp'];
+            data.members.forEach((m, index) => {
+                const item = document.createElement('div');
+                item.className = 'item';
+                item.style.setProperty('--position', index + 1);
+                item.style.backgroundImage = `linear-gradient(to top, rgba(0,0,0,0.95) 5%, rgba(0,0,0,0.4) 50%, transparent 100%), url('${bgImages[index % bgImages.length]}')`;
+                item.innerHTML = `<span class="slider-member-name">${m.name}</span>`;
+                slider.appendChild(item);
+            });
+
+            // 3D REVOLVE LOGIC (Touch & Resume)
+            let rotation = 0;
+            let startX = 0;
+            let isDragging = false;
+            let autoRotateInterval;
+            let resumeTimer;
+
+            const startAuto = () => {
+                clearInterval(autoRotateInterval);
+                autoRotateInterval = setInterval(() => {
+                    rotation += 0.5;
+                    slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
+                }, 30);
+            };
+
+            const stopAll = () => {
+                clearInterval(autoRotateInterval);
+                clearTimeout(resumeTimer);
+            };
+
+            sliderContainer.addEventListener('touchstart', (e) => {
+                stopAll();
+                startX = e.touches[0].clientX;
+                isDragging = true;
+                slider.style.transition = 'none';
+            }, { passive: true });
+
+            sliderContainer.addEventListener('touchmove', (e) => {
+                if (!isDragging) return;
+                rotation += (startX - e.touches[0].clientX) * 0.5;
+                slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
+                startX = e.touches[0].clientX;
+            }, { passive: true });
+
+            sliderContainer.addEventListener('touchend', () => {
+                isDragging = false;
+                slider.style.transition = 'transform 0.8s ease-out';
+                resumeTimer = setTimeout(startAuto, 3000);
+            });
+
+            sliderContainer.addEventListener('wheel', (e) => {
+                e.preventDefault();
+                stopAll();
+                rotation += e.deltaY * 0.2;
+                slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
+                resumeTimer = setTimeout(startAuto, 3000);
+            }, { passive: false });
+
+            sliderContainer.appendChild(slider);
+            membersGrid.appendChild(sliderContainer);
+            startAuto();
         } else {
-            scrollGrid(1);
+            // Standard Team Rendering
+            const leaderDiv = document.createElement('div');
+            leaderDiv.className = 'leader-banner';
+            leaderDiv.innerHTML = `<img src="${data.leader.photo || 'default-avatar.jpg'}" class="leader-photo"><div><h3>LEADER: ${data.leader.name}</h3><div class="leader-contact">CONTACT: ${data.leader.contact}</div></div>`;
+            membersGrid.appendChild(leaderDiv);
+
+            data.colead.forEach(k => {
+                const coDiv = document.createElement('div');
+                coDiv.className = 'leader-banner';
+                coDiv.innerHTML = `<img src="${k.photo || 'default-avatar.jpg'}" class="leader-photo"><div><h4>CO-LEAD: ${k.name}</h4><div class="leader-contact">CONTACT: ${k.role}</div></div>`;
+                membersGrid.appendChild(coDiv);
+            });
+
+            data.members.forEach(m => {
+                const mDiv = document.createElement('div');
+                mDiv.className = 'member-row';
+                mDiv.innerHTML = `<div class="member-info"><span class="member-name">${m.name}</span><br><span class="member-role">${m.role}</span></div>`;
+                membersGrid.appendChild(mDiv);
+            });
         }
-    }, 4000); // 4 seconds per slide
-}
-// --- WEBSITE TEAM: MOBILE ROTATION & AUTO-RESUME ---
-const slider = document.querySelector('.slider');
-const sliderContainer = document.querySelector('.slider-container');
-
-if (slider && sliderContainer) {
-    let rotation = 0;
-    let startX = 0;
-    let isDragging = false;
-    let resumeTimer;
-    let autoRotateInterval;
-
-    // Start auto-rotation immediately
-    function startAutoRotation() {
-        clearInterval(autoRotateInterval);
-        autoRotateInterval = setInterval(() => {
-            rotation += 0.5; // Speed of auto-rotation
-            slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
-        }, 30);
+        overlay.classList.add('active');
+        document.body.classList.add('no-scroll');
     }
 
-    // Stop all rotation and timers
-    function stopRotation() {
-        clearInterval(autoRotateInterval);
-        clearTimeout(resumeTimer);
+    function closeTeamOverlay() { 
+        overlay.classList.remove('active'); 
+        document.body.classList.remove('no-scroll');
+        // Clear all intervals/timers when closing
+        const slider = document.querySelector('.slider');
+        if(slider) slider.parentElement.innerHTML = ''; 
+    }
+    
+    overlay.addEventListener('click', (e) => { if (e.target === overlay) closeTeamOverlay(); });
+
+    // --- RAINING BLOOD ---
+    setInterval(() => {
+        const drop = document.createElement('div');
+        drop.className = 'blood-drop';
+        drop.style.width = Math.random() * 2 + 1 + 'px';
+        drop.style.height = Math.random() * 15 + 10 + 'px';
+        drop.style.left = Math.random() * 100 + 'vw';
+        drop.style.animation = `rainBlood ${Math.random() * 2 + 1.5}s linear forwards`;
+        document.getElementById('bloodContainer')?.appendChild(drop);
+        setTimeout(() => drop.remove(), 4000);
+    }, 70);
+
+    // --- MAIN GRID AUTO-SCROLL ---
+    const gridContainer = document.querySelector('.grid');
+    let autoScrollInterval;
+
+    function startAutoScroll() {
+        clearInterval(autoScrollInterval);
+        autoScrollInterval = setInterval(() => {
+            if (!gridContainer) return;
+            if (gridContainer.scrollLeft + gridContainer.clientWidth >= gridContainer.scrollWidth - 10) {
+                gridContainer.scrollTo({ left: 0, behavior: 'smooth' });
+            } else {
+                gridContainer.scrollBy({ left: gridContainer.clientWidth * 0.8, behavior: 'smooth' });
+            }
+        }, 4000);
     }
 
-    // Desktop: Scroll wheel rotation
-    sliderContainer.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        stopRotation();
-        rotation += e.deltaY * 0.15;
-        slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
-        
-        // Resume after 3 seconds of no scrolling
-        resumeTimer = setTimeout(startAutoRotation, 3000);
-    }, { passive: false });
-
-    // Mobile: Touch start
-    sliderContainer.addEventListener('touchstart', (e) => {
-        stopRotation();
-        startX = e.touches[0].clientX;
-        isDragging = true;
-        slider.style.transition = 'none'; // Instant response while dragging
-    }, { passive: true });
-
-    // Mobile: Touch move (Rotate)
-    sliderContainer.addEventListener('touchmove', (e) => {
-        if (!isDragging) return;
-        const currentX = e.touches[0].clientX;
-        const deltaX = startX - currentX;
-        
-        rotation += deltaX * 0.5; // Sensitivity
-        slider.style.transform = `perspective(1200px) rotateY(${rotation}deg)`;
-        
-        startX = currentX;
-    }, { passive: true });
-
-    // Mobile: Touch end (Start resume timer)
-    sliderContainer.addEventListener('touchend', () => {
-        isDragging = false;
-        slider.style.transition = 'transform 0.8s ease-out'; // Restore smoothness
-        
-        // Resume auto-rotation after 3 seconds of inactivity
-        resumeTimer = setTimeout(startAutoRotation, 3000);
-    });
-
-    // Initialize the rotation
-    startAutoRotation();
-}
-// Stop auto-scroll when user touches the screen
-gridContainer.addEventListener('touchstart', () => clearInterval(autoScrollInterval));
-gridContainer.addEventListener('touchend', () => startAutoScroll());
-
-// Initialize
-startAutoScroll();
-    </script>
+    gridContainer?.addEventListener('touchstart', () => clearInterval(autoScrollInterval), { passive: true });
+    gridContainer?.addEventListener('touchend', startAutoScroll);
+    startAutoScroll();
+</script>
 </body>
 </html>
